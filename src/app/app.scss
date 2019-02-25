@@ -1,0 +1,134 @@
+// http://ionicframework.com/docs/theming/
+
+
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+
+
+//GENERAL
+    .colorblack {
+        color: white;
+    }
+    .colorwhite {
+        color: black;
+    }
+
+
+//FLASHCARDS
+    .flashcard-front {
+        border: 1px solid black;
+        text-align: center;
+    }
+    .flashcard-back {
+        text-align: center;
+        border: 1px solid white;
+        color: white;
+        background-color: black;
+    }
+    .fullCard {
+        padding-top: 30%;
+        padding-bottom: 30%;
+    }
+    .flashcard-back-full {
+        text-align: center;
+        border: 1px solid white;
+        color: white;
+        background-color: grey;
+    }
+
+//MESSAGES-SERVICE 
+    .toast-blue {
+        .toast-wrapper {
+            background: #0392CF;
+            opacity: 0.9;
+            text-align: center;
+        }
+        .toast-message {
+            font-size: 2 rem;
+            color: #FFF;
+        }
+    }
+
+    .toast-black {
+        .toast-wrapper {
+            background: black;
+            opacity: 0.9;
+            text-align: center;
+        }
+        .toast-message {
+            font-size: 2rem;
+            color: #FFF;
+        }
+    }
+
+    .alert-error {
+        color: white; //text color
+        button {
+            color: color($colors, winered) !important;
+            background-color: white !important;
+        }
+        .alert-message {
+            color: white;
+        }
+        .alert-wrapper {
+            background-color: color($colors, winered); // bg color of alert content
+        }
+    }
+
+//PADDING
+    .padding {
+        padding: 2rem;
+    }
+    .padding_bottom_large {
+        padding-bottom: 24%;
+    }
+    .padding_bottom {
+        padding-bottom: 15%;
+    }
+    .padding_bottom_small {
+        padding-bottom: 6%;
+    }
+
+//MARGIN        
+    .margin_top_large {
+        margin-top: 24%;
+    }
+    .margin_top {
+        margin-top: 15%;
+    }
+    .margin_top_small {
+        margin-top: 6%;
+    }
+    .margin_bottom_large {
+        margin-bottom: 24%;
+    }
+    .margin_bottom {
+        margin-bottom: 15%;
+    }
+    .margin_bottom_small {
+        margin-bottom: 6%;
+    }
+    .nomargin {
+        margin: 0% !important;
+    }
+
+//ion-select button
+    .hidesmthn {
+        position: absolute;
+       .select-icon, .select-text {
+           display: none !important;  /* hidden triangle icon and selected text */
+       }
+    }
+
+

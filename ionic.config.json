@@ -1,0 +1,13 @@
+{
+  "name": "flashcards",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular",
+  "proxies": [
+    {
+      "path": "http://localhost:8100/#/tabs/home/quiz",
+      "proxyUrl": "https://www.mediawiki.org/w/api"
+    }
+  ]
+}

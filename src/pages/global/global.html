@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title style="text-align: center">Global Feed</ion-title>
+  </ion-navbar>
+
+  <!-- Search and Reorder Toolbar -->
+  <ion-toolbar style="color: white">
+    <ion-searchbar placeholder="search for title... or user... or e-mail.." cancelButtonText='Cancel'
+    [(ngModel)]="searchInput"
+    (ionFocus)="onFocus($event)"
+    (ionInput)="onInput($event)"
+    (ionCancel)="onCancel($event)">
+    </ion-searchbar>
+    <ion-buttons end>
+      <button ion-button icon-only (click)='openSelect()'>
+        <ion-icon name="reorder"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+  <!-- // Search and Reorder Toolbar -->
+
+</ion-header>
+
+<ion-content (ionScroll)="onScroll($event)" padding>
+    <div >      
+      
+      <!-- list of sets -->
+      <ng-container *ngIf="sets?.length > 0; else noSet">
+        <ion-list *ngFor="let set of sets" (click)="openViewSet(set.id)" (swipeleft)="importSet(set.id)" (swiperight)="logSetID(set.id)" >
+          <div>
+          <ion-card [ngClass]="set.user_id != currentUser_id ? 'darkBlue': ''" color="primary">
+            <ion-card-header>
+              <ion-card-title>{{set.title}}</ion-card-title>
+
+                <!-- username -->
+                <p [ngClass]="set.user_id == currentUser_id ? 'strong': ''">
+                  <span *ngIf="set.user_username && set.user_username !='' ">
+                    {{set.user_username}} (
+                  </span>
+                  {{set.user_email}}
+                  <span *ngIf="set.user_username && set.user_username !='' ">
+                    )
+                  </span>
+                </p>
+                <!-- // username -->
+                
+            </ion-card-header>
+
+            <div>
+              <ion-card-content>
+                {{set.description}}
+              </ion-card-content>
+            </div>
+
+          </ion-card>
+        </div>
+        </ion-list>
+      </ng-container>
+      <!-- // list of sets  -->
+
+      <!-- no sets to show -->
+      <ng-template #noSet>
+        <hr>
+        <h5>No Sets Found</h5>
+      </ng-template>
+      <!-- // no sets to show -->
+
+    </div>
+
+    <ion-select class="hidesmthn" #selectOrder interface="action-sheet" (ionChange)="submit($event)">
+      <ion-option selected="true" value="date-desc">Date (new - old) (Standard)</ion-option>
+      <ion-option value="date-asc">Date (old - new)</ion-option>
+      <ion-option value="title-asc">Title (a - z)</ion-option>
+      <ion-option value="title-desc">Title (z - a)</ion-option>
+      <ion-option value="uname-asc">Nickname (a - z)</ion-option>
+      <ion-option value="uname-desc">Nickname (z - a)</ion-option>
+      <ion-option value="umail-asc">User´s E-Mail (a - z)</ion-option>
+      <ion-option value="umail-desc">User´s E-Mail (z - a)</ion-option>
+    </ion-select>
+</ion-content>

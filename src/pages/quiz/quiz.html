@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-navbar>
+      <ion-title *ngIf="set_title"><strong>Quiz</strong>&emsp;{{set_title}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <div swipeAll
+    (swipe)="this.swipeAll($event)"
+    (swipeleft)="this.swipeLeft($event, rand_card)"
+    (swiperight)="this.swipeRight($event, rand_card)"
+    (swipeup)="this.swipeUp($event, rand_card)"
+    (swipedown)="this.swipeDown($event, rand_card)"
+    *ngIf="rand_card" 
+    (click)="turnCard()"
+    >
+      <div [ngClass]="cardShowsFront? 'flashcard-front': 'flashcard-back-full' " class="fullCard" >
+          <h1>{{cardShowsFront? rand_card.front : rand_card.back}}</h1>
+          <span [ngSwitch]="rand_card.diff">
+              <p *ngSwitchCase="0">(easy)</p>
+              <p *ngSwitchCase="1">(medium)</p>
+              <p *ngSwitchCase="2">(hard)</p>
+          </span>
+      </div>
+  </div>
+
+  <div  *ngIf="cardShowsFront == false" padding>
+    <ng-container *ngIf="details && details != ''; else noD">
+      <p><strong>Details:</strong><br>
+      <span>{{details}}<br></span></p>
+    </ng-container>
+    <ng-template #noD>
+      <div style="color: gray">
+        <p><strong>Details:</strong><br>
+        <span>No Details Available Right Now<br></span></p>
+      </div>
+    </ng-template>
+  </div>
+
+  <div  *ngIf="cardShowsFront == false" padding>
+    <ng-container *ngIf="phrases && phrases[1]; else noP" >
+      <p><strong>Phrases:</strong><br>
+      <span *ngFor="let phrase of phrases" >{{phrase}}<br></span></p>
+    </ng-container>
+    <ng-template #noP>
+      <div style="color: gray">
+        <p><strong>Phrases:</strong><br>
+        <span>No Phrases Available Right Now<br></span></p>
+      </div>
+    </ng-template>
+  </div>
+  
+  
+  
+
+  <!-- <ion-slides pager="true" >
+    <ion-slide style="background-color: grey">
+      <h1>Definition:</h1>
+      <div class="width-container">
+        <p>{{def}}</p>
+      </div>
+    </ion-slide>
+    <ion-slide style="background-color: grey">
+      <h1>Phrases:</h1>
+      <div class="width-container">
+          <p>{{phrases}}</p>
+        </div>
+    </ion-slide>
+  </ion-slides> -->
+
+</ion-content>

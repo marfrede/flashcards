@@ -1,0 +1,187 @@
+
+<ion-header>
+  <ion-navbar color="secondary">
+    <ion-title *ngIf="set" ><strong>{{set.title}}</strong></ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+<div *ngIf="set" ><!-- the content shows either an own or a foreign set -->
+
+<!-- OWN SET - if user owns the shown set -->
+<ng-container *ngIf="isOwner && isOwner == true; else foreignSet">
+
+  <!-- Form -->
+  <form (ngSubmit)="newCard()" padding style="border: 1px solid grey" class="margin_bottom_small">
+
+    <ion-item>
+      <ion-label><strong>front: </strong></ion-label>
+      <ion-input class="text-input" type="text" [(ngModel)]="newcard.front" name="title" placeholder="Hund.."></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label><strong>back: </strong></ion-label>
+      <ion-input class="text-input" type="text" [(ngModel)]="newcard.back" name="description" placeholder="dog..."></ion-input>
+    </ion-item><br>
+    
+    <button ion-button type="submit" color="secondary" block>Add Flashcard</button>
+
+  </form>
+  <!-- // Form -->
+
+   <!-- Button Bar -->
+      <!-- Quizmode Button -->
+      <button *ngIf="this.cards && this.cards.length > 0"  (click)='openQuizPage()' ion-button full>{{quizButtonText}}</button>
+      <!-- // Quizmode Button -->
+      
+      <!-- Search and Reorder Toolbar -->
+      <ion-toolbar style="color: white">
+        <ion-searchbar cancelButtonText='Cancel'
+        [(ngModel)]="searchInput"
+        (ionFocus)="onFocus($event)"
+        (ionInput)="onInput($event)"
+        (ionCancel)="onCancel($event)">
+        </ion-searchbar>
+        <ion-buttons end>
+          <button ion-button icon-only (click)='openSelect()'>
+            <ion-icon name="reorder"></ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-toolbar>
+      <!-- // Search and Reorder Toolbar -->
+    <!-- // Button Bar -->
+   
+  <!-- Flashcards -->
+  <div id="cards">
+    <div class="padding">
+      <ng-container *ngIf="cards?.length > 0; else noCards">
+        <ion-list *ngFor="let card of cards">
+
+          <ion-item-sliding (click)="turnCard(card)">
+            <ion-item [ngClass]="cardsShowFront[cards.indexOf(card)]? 'flashcard-front': 'flashcard-back' " >
+               {{cardsShowFront[cards.indexOf(card)]? cardFrontText: cardBackText}}
+               {{cardsShowFront[cards.indexOf(card)]? card.front : card.back}}
+            </ion-item>
+            <ion-item-options side="right">
+              <button class="padding" color="danger" ion-button (click)="deleteCard(card.id)">&emsp;&emsp;&emsp;<ion-icon name="trash"></ion-icon>&emsp;&emsp;&emsp;&emsp;</button>
+            </ion-item-options>
+          </ion-item-sliding>
+
+        </ion-list>
+      </ng-container>
+      <ng-template #noCards>
+        <hr>
+        <ng-container *ngIf="this.cards_const && this.cards_const.length > 0; else rllyNo">
+            <h5>No Cards Found</h5>
+        </ng-container>
+        <ng-template #rllyNo>
+          <h5>{{noCardsText}}{{set.title}}</h5>
+        </ng-template>
+      </ng-template>
+    </div>
+  </div>
+  <!-- // Flashcards -->
+
+  <!-- Turn Cards Button  -->
+  <button [ngClass]="this.cards && (cardsShowingFront >= (cards.length / 2)) ? 'colorwhite' : 'colorblack' " class="margin_bottom_small" (click)='turnEveryCard()' ion-button full>Turn Cards To {{ this.cards && (cardsShowingFront >= (cards.length / 2)) ? cardBackButText : cardFrontButText}}</button>
+   <!-- // Turn Cards Button  -->
+
+  <!-- delete Button -->
+  <button  class="margin_top_small" position="bottom" (click)='deleteSet()' color="dark" style="color: red" ion-button full>Delete Set</button>
+  <!-- // delete Button -->
+
+
+</ng-container>
+<!-- // OWN SET - if user owns the shown set -->
+
+
+
+
+<!-- FOREIGN SET - if user is not the owner of the shown set -->
+<ng-template #foreignSet>
+
+  <!-- Description -->
+  <div padding>
+    <h2>Description:<br></h2>
+    <p>{{set.description}}</p>
+  </div>
+  <!-- // Description -->
+
+
+  <!-- Button Bar -->
+    <!-- Quizmode Button -->
+    <button (click)='openQuizPage()' ion-button full>{{quizButtonText}}</button>
+    <!-- // Quizmode Button -->
+    
+    <!-- Search and Reorder Toolbar -->
+    <ion-toolbar style="color: white">
+      <ion-searchbar cancelButtonText='Cancel'
+          [(ngModel)]="searchInput"
+          (ionInput)="onInput($event)"
+          (ionFocus)="onFocus($event)"
+          (ionCancel)="onCancel($event)">
+      </ion-searchbar>
+      <ion-buttons end>
+        <button ion-button icon-only (click)='openSelect()'>
+          <ion-icon name="reorder"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-toolbar>
+    <!-- // Search and Reorder Toolbar -->
+  <!-- // Button Bar -->
+     
+  <!-- Flashcards -->
+  <div id="cards">
+    <div class="padding">
+      <ng-container *ngIf="cards?.length > 0; else noCards">
+        <ion-list *ngFor="let card of cards">
+
+          <ion-item (click)="turnCard(card)" [ngClass]="cardsShowFront[cards.indexOf(card)]? 'flashcard-front': 'flashcard-back' " >
+              {{cardsShowFront[cards.indexOf(card)]? cardFrontText: cardBackText}}
+              {{cardsShowFront[cards.indexOf(card)]? card.front : card.back}}
+          </ion-item>
+
+        </ion-list>
+      </ng-container>
+      <ng-template #noCards>
+        <hr>
+        <ng-container *ngIf="this.cards_const && this.cards_const.length > 0; else rllyNo">
+            <h5>No Cards Found</h5>
+        </ng-container>
+        <ng-template #rllyNo>
+          <h5>{{noCardsText}}{{set.title}}</h5>
+        </ng-template>
+      </ng-template>
+    </div>
+  </div>
+  <!-- // Flashcards -->
+
+  <!-- Turn Cards Button  -->
+  <button  class="margin_bottom_small" (click)='turnEveryCard()' ion-button full>Turn Cards To {{ this.cards && (this.cardsShowingFront >= (this.cards.length / 2)) ? cardBackButText : cardFrontButText}}</button>
+  <!-- // Turn Cards Button  -->
+
+</ng-template>
+<!-- // FOREIGN SET - if user is not the owner of the shown set -->
+
+</div>
+
+<ion-select class="hidesmthn" #selectOrder interface="action-sheet" (ionChange)="submit($event)">
+  <ion-option selected="true" value="date-desc">Date (new - old)  (Standard)</ion-option>
+  <ion-option value="date-asc">Date (old - new)</ion-option>
+  <ion-option value="diff-desc">Difficulty (hard - easy)</ion-option>
+  <ion-option value="diff-asc">Difficulty (easy - hard)</ion-option>
+  <ion-option value="front-asc">Front (a - z)</ion-option>
+  <ion-option value="front-desc">Front (z - a)</ion-option>
+  <ion-option value="back-asc">Back (a - z)</ion-option>
+  <ion-option value="back-desc">Back (z - a)</ion-option>
+</ion-select>
+
+
+</ion-content>
+
+
+
+  
+
+
+

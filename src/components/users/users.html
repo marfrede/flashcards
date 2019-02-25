@@ -1,0 +1,14 @@
+<div class="padding">
+  <ng-container *ngIf="usernames?.length > 0; else noNames">
+    <ion-list *ngFor="let username of usernames" >
+        <h5><strong>{{username.email}}</strong></h5>
+        <h6 *ngIf="username.username != ''"><strong>Name:   </strong> {{username.username}}</h6>
+        <p><strong>ID:     </strong> {{username.id}}   </p>
+        <hr>
+    </ion-list>
+  </ng-container>
+  <ng-template #noNames>
+    <hr>
+    <h5>No Names</h5>
+  </ng-template>
+</div>

@@ -1,0 +1,82 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-row>
+      <ion-title style="text-align: center" col-8>Home</ion-title>
+      <button col-4 ion-button color="secondary" block icon-start (click)="openAddSet()">
+        <ion-icon name="add-circle"></ion-icon>
+        <p id="addbuttonp">Add Set</p>
+      </button>
+    </ion-row>
+  </ion-navbar>
+
+  <!-- Search and Reorder Toolbar -->
+  <ion-toolbar style="color: white">
+    <ion-searchbar placeholder="search for title..." cancelButtonText='Cancel'
+    [(ngModel)]="searchInput"
+    (ionFocus)="onFocus($event)"
+    (ionInput)="onInput($event)"
+    (ionCancel)="onCancel($event)">
+    </ion-searchbar>
+    <ion-buttons end>
+      <button ion-button icon-only (click)='openSelect()'>
+        <ion-icon name="reorder"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+  <!-- // Search and Reorder Toolbar -->
+
+</ion-header>
+
+<ion-content padding>
+    <div >
+      
+      <!-- list of sets -->
+      <ng-container *ngIf="sets?.length > 0; else noSet">
+        <ion-list *ngFor="let set of sets" (click)="openViewSet(set.id)">
+          <div>
+          <ion-card color="primary">
+            <ion-card-header>
+              <ion-card-title>{{set.title}}</ion-card-title>
+            </ion-card-header>
+
+            <div>
+              <ion-card-content>
+                {{set.description}}
+              </ion-card-content>
+            </div>
+
+          </ion-card>
+        </div>
+        </ion-list>
+      </ng-container>
+      <!-- // list of sets  -->
+
+      <!-- no sets to show -->
+      <ng-template #noSet>
+        <hr>
+        <ng-container>
+          <button *ngIf="this.sets_const && !(this.sets_const.length > 0); else filter"  ion-button color="secondary" block icon-start (click)="openAddSet()">
+            <ion-icon name="add-circle"></ion-icon>
+            <p id="addbuttonp">Add Your First Set</p>
+          </button>
+        </ng-container>
+        <ng-template #filter>
+          <h5>No Sets Found</h5>
+        </ng-template>
+      </ng-template>
+      <!-- // no sets to show -->
+
+    </div>
+
+    <ion-select class="hidesmthn" #selectOrder interface="action-sheet" (ionChange)="submit($event)">
+      <ion-option selected="true" value="date-desc">Date (new - old) (Standard)</ion-option>
+      <ion-option value="date-asc">Date (old - new)</ion-option>
+      <ion-option value="title-asc">Title (a - z)</ion-option>
+      <ion-option value="title-desc">Title (z - a)</ion-option>
+      <ion-option value="uname-asc">Nickname (a - z)</ion-option>
+      <ion-option value="uname-desc">Nickname (z - a)</ion-option>
+      <ion-option value="umail-asc">User´s E-Mail (a - z)</ion-option>
+      <ion-option value="umail-desc">User´s E-Mail (z - a)</ion-option>
+    </ion-select>
+</ion-content>
