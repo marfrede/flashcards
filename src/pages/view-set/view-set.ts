@@ -247,6 +247,10 @@ export class ViewSetPage {
       });
       alert.present();
     } 
-  }  
+  }
+  
+  editSet(){
+    this.navCtrl.push('EditSetPage',{"set_id": this.set_id, "parentPage": this });
+  }
 
 }

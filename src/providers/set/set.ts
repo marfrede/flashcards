@@ -99,6 +99,18 @@ export class SetProvider {
     })
   }
 
+  //UPDATE SET
+  updateSet(set_id:string, title:string, description:string, priv:boolean){
+    return new Promise<string>((resolve)=>{
+      this.setsCollection.doc(set_id).update({
+        title: title,
+        description: description,
+        private: priv
+      });
+      resolve(set_id);
+    })
+  }
+
   getSet(pId:string):Promise<Set>{
     return new Promise<Set>((resolve, reject)=>{
       let set:Set;

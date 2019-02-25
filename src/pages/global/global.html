@@ -29,7 +29,7 @@
         <ion-list *ngFor="let set of sets">
           <div>
           <ion-item-sliding #slidingSet>
-          <ion-item (click)="openViewSet(set.id)" [ngClass]="set.user_id != currentUser_id ? 'darkBlue': ''" color="primary">
+          <ion-item (click)="openViewSet(set.id)" [ngClass]="set.user_id != currentUser_id ? 'darkBlue': 'lightBlue'">
             <ion-card-header>
               <ion-card-title style="color: white" >{{set.title}}</ion-card-title>
 
@@ -54,7 +54,7 @@
             </div>
           </ion-item>
             <ion-item-options side="right">
-              <button class="padding" color="light" ion-button (click)="copySet(slidingSet, set.id)">&emsp;&emsp;&emsp;&emsp;<ion-icon name="copy"></ion-icon>&emsp;&emsp;&emsp;&emsp;</button>
+              <button class="padding" color="light" ion-button (click)="copySet(slidingSet, set.id)">&emsp;&emsp;&emsp;&emsp;<ion-icon name="download"></ion-icon>&emsp;&emsp;&emsp;&emsp;</button>
             </ion-item-options>
           </ion-item-sliding>
         </div>

@@ -1,7 +1,14 @@
 
 <ion-header>
-  <ion-navbar color="secondary">
-    <ion-title *ngIf="set" ><strong>{{set.title}}</strong></ion-title>
+  <ion-navbar [color]="isOwner ? 'primary' : 'darkBlue'"  >
+              <ion-row>
+                <ion-card-title style="color: white" col-9 icon-end>{{set? set.title : ''}}</ion-card-title>
+                <span col-3>
+                    <ion-icon *ngIf="set && set.private" col-4 color="winered" name="person"></ion-icon>
+                    <ion-icon *ngIf="set && !(set.private)" col-4 color="darkGreen" name="people"></ion-icon>
+                    <ion-icon *ngIf="set && set.user_email != set.creator_email" color="black"  col-4 name="download"></ion-icon>
+                </span>
+              </ion-row>
   </ion-navbar>
 </ion-header>
 
@@ -24,7 +31,7 @@
       <ion-input class="text-input" type="text" [(ngModel)]="newcard.back" name="description" placeholder="dog..."></ion-input>
     </ion-item><br>
     
-    <button ion-button type="submit" color="secondary" block>Add Flashcard</button>
+    <button ion-button type="submit" color="primary" block>Add Flashcard</button>
 
   </form>
   <!-- // Form -->
@@ -35,7 +42,7 @@
       <!-- // Quizmode Button -->
       
       <!-- Search and Reorder Toolbar -->
-      <ion-toolbar style="color: white">
+      <ion-toolbar *ngIf="this.cards && this.cards.length >= 2"  style="color: white">
         <ion-searchbar cancelButtonText='Cancel'
         [(ngModel)]="searchInput"
         (ionFocus)="onFocus($event)"
@@ -83,11 +90,25 @@
   <!-- // Flashcards -->
 
   <!-- Turn Cards Button  -->
-  <button [ngClass]="this.cards && (cardsShowingFront >= (cards.length / 2)) ? 'colorwhite' : 'colorblack' " class="margin_bottom_small" (click)='turnEveryCard()' ion-button full>Turn Cards To {{ this.cards && (cardsShowingFront >= (cards.length / 2)) ? cardBackButText : cardFrontButText}}</button>
+  <button *ngIf="this.cards && this.cards.length>=2"  [ngClass]="this.cards && (cardsShowingFront >= (cards.length / 2)) ? 'colorwhite' : 'colorblack' "
+          class="margin_bottom_small" (click)='turnEveryCard()' ion-button icon-end full>
+    <p>Turn Cards To {{ this.cards && (cardsShowingFront >= (cards.length / 2)) ? cardBackButText : cardFrontButText}}</p>
+    <ion-icon name="sync"></ion-icon>
+  </button>
    <!-- // Turn Cards Button  -->
 
   <!-- delete Button -->
-  <button  class="margin_top_small" position="bottom" (click)='deleteSet()' color="dark" style="color: red" ion-button full>Delete Set</button>
+  <button  class="margin_top_small" (click)='editSet()' color="darkYellow" style="color: #ff0000" ion-button full icon-end>
+     <p>Edit Set</p>
+     <ion-icon name="build"></ion-icon>
+  </button>
+  <!-- // delete Button -->
+
+  <!-- delete Button -->
+  <button  class="margin_top_small" (click)='deleteSet()' color="lightblack" style="color: #ff0000" ion-button full icon-end>
+      <p>Delete Set</p>
+      <ion-icon name="trash"></ion-icon>
+  </button>
   <!-- // delete Button -->
 
 
@@ -109,25 +130,22 @@
 
 
   <!-- Button Bar -->
-    <!-- Quizmode Button -->
-    <button (click)='openQuizPage()' ion-button full>{{quizButtonText}}</button>
-    <!-- // Quizmode Button -->
-    
-    <!-- Search and Reorder Toolbar -->
-    <ion-toolbar style="color: white">
-      <ion-searchbar cancelButtonText='Cancel'
+      
+      <!-- Search and Reorder Toolbar -->
+      <ion-toolbar *ngIf="this.cards && this.cards.length >= 2"  style="color: white">
+          <ion-searchbar cancelButtonText='Cancel'
           [(ngModel)]="searchInput"
-          (ionInput)="onInput($event)"
           (ionFocus)="onFocus($event)"
+          (ionInput)="onInput($event)"
           (ionCancel)="onCancel($event)">
-      </ion-searchbar>
-      <ion-buttons end>
-        <button ion-button icon-only (click)='openSelect()'>
-          <ion-icon name="reorder"></ion-icon>
-        </button>
-      </ion-buttons>
-    </ion-toolbar>
-    <!-- // Search and Reorder Toolbar -->
+          </ion-searchbar>
+          <ion-buttons end>
+            <button ion-button icon-only (click)='openSelect()'>
+              <ion-icon name="reorder"></ion-icon>
+            </button>
+          </ion-buttons>
+        </ion-toolbar>
+        <!-- // Search and Reorder Toolbar -->
   <!-- // Button Bar -->
      
   <!-- Flashcards -->
@@ -157,8 +175,12 @@
   <!-- // Flashcards -->
 
   <!-- Turn Cards Button  -->
-  <button  class="margin_bottom_small" (click)='turnEveryCard()' ion-button full>Turn Cards To {{ this.cards && (this.cardsShowingFront >= (this.cards.length / 2)) ? cardBackButText : cardFrontButText}}</button>
-  <!-- // Turn Cards Button  -->
+  <button *ngIf="this.cards && this.cards.length>=2"  [ngClass]="this.cards && (cardsShowingFront >= (cards.length / 2)) ? 'colorwhite' : 'colorblack' "
+        class="margin_bottom_small" (click)='turnEveryCard()' ion-button icon-start full>
+        <ion-icon name="sync"></ion-icon>
+  <p>Turn Cards To {{ this.cards && (cardsShowingFront >= (cards.length / 2)) ? cardBackButText : cardFrontButText}}</p>
+  </button>
+<!-- // Turn Cards Button  -->
 
 </ng-template>
 <!-- // FOREIGN SET - if user is not the owner of the shown set -->

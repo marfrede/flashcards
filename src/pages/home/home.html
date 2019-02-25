@@ -40,19 +40,22 @@
               <ion-row>
                 <ion-card-title col-9 icon-end>{{set.title}}</ion-card-title>
                 <span col-3>
-                    <ion-icon *ngIf="set.private" col-3 style="color: red" name="person"></ion-icon>
-                    <ion-icon *ngIf="set.user_email != set.creator_email" style="color: red"  col-3 name="copy"></ion-icon>
-                    <ion-icon *ngIf="!(set.private)" col-3 style="color: green" name="people"></ion-icon>
+                    <ion-icon *ngIf="set.private" col-4 color="winered" name="person"></ion-icon>
+                    <ion-icon *ngIf="!(set.private)" col-4 color="darkGreen" name="people"></ion-icon>
+                    <ion-icon *ngIf="set.user_email != set.creator_email" color="black"  col-4 name="download"></ion-icon>
                 </span>
               </ion-row>
             </ion-card-header>
 
             <div>
               <ion-card-content>
-                <h5>{{set.description}}</h5>
+                <h5 padding>{{set.description}}</h5>
                 <div *ngIf="(set.user_email != set.creator_email)" >
                   <ng-container *ngIf="set.creator_username != ''; else noUname">
-                    <strong style="color: black">created by: {{set.creator_username}} ({{set.creator_email}})</strong>
+                    <ion-row>
+                      <p col-4 style="color: black" icon-start><ion-icon name="create"></ion-icon>created by:</p>
+                      <ion-col col-8><strong style="text-align: center;color: black">{{set.creator_username}} ({{set.creator_email}})</strong></ion-col>
+                    </ion-row>
                   </ng-container>
                   <ng-template #noUname>
                     <strong style="color: black">created by: {{set.creator_email}}</strong>

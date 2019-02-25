@@ -1,0 +1,39 @@
+<!--
+  Generated template for the EditSetPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar>
+                <ion-row>
+                  <ion-card-title col-9 icon-end>{{editSet? editSet.title : ''}}</ion-card-title>
+                  <span col-3>
+                      <ion-icon *ngIf="editSet && editSet.private" col-4 color="winered" name="person"></ion-icon>
+                      <ion-icon *ngIf="editSet && !(editSet.private)" col-4 color="darkGreen" name="people"></ion-icon>
+                      <ion-icon *ngIf="editSet && editSet.user_email != editSet.creator_email" color="black"  col-4 name="download"></ion-icon>
+                  </span>
+                </ion-row>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form *ngIf="editSet"  (ngSubmit)="submit()">
+    <ion-label><strong>Titel: </strong></ion-label>
+    <ion-item>
+      <ion-input class="text-input" type="text" [(ngModel)]="editSet.title" name="title" color="secondary" placeholder="give your editSet a title..."></ion-input>
+    </ion-item>
+    <br>
+    <ion-label><strong>Description: </strong></ion-label>
+    <ion-item>
+      <ion-textarea class="text-input" rows="5" [(ngModel)]="editSet.description" color="secondary" name="description" placeholder="give your editSet a good description..."></ion-textarea>
+    </ion-item>
+    <br>
+      <ion-item>
+        <ion-label><strong>Private: </strong></ion-label>
+        <ion-toggle [(ngModel)]="editSet.private" name="private"></ion-toggle>
+      </ion-item>
+    <br>
+    <button ion-button type="submit" color="secondary" block>Update Set</button>
+  </form>
+</ion-content>
