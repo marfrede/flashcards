@@ -37,11 +37,19 @@
           <div>
           <ion-card color="primary">
             <ion-card-header>
-              <ion-card-title icon-end>{{set.title}}<ion-icon style="font-size: 20px" *ngIf="set.user_email != set.creator_email"  name="copy"></ion-icon></ion-card-title>
+              <ion-row>
+                <ion-card-title col-9 icon-end>{{set.title}}</ion-card-title>
+                <span col-3>
+                    <ion-icon *ngIf="set.private" col-3 style="color: red" name="person"></ion-icon>
+                    <ion-icon *ngIf="set.user_email != set.creator_email" style="color: red"  col-3 name="copy"></ion-icon>
+                    <ion-icon *ngIf="!(set.private)" col-3 style="color: green" name="people"></ion-icon>
+                </span>
+              </ion-row>
             </ion-card-header>
 
             <div>
               <ion-card-content>
+                <h5>{{set.description}}</h5>
                 <div *ngIf="(set.user_email != set.creator_email)" >
                   <ng-container *ngIf="set.creator_username != ''; else noUname">
                     <strong style="color: black">created by: {{set.creator_username}} ({{set.creator_email}})</strong>
@@ -50,7 +58,6 @@
                     <strong style="color: black">created by: {{set.creator_email}}</strong>
                   </ng-template>
                 </div>
-                {{set.description}}
               </ion-card-content>
             </div>
 

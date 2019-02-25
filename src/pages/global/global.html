@@ -26,11 +26,12 @@
       
       <!-- list of sets -->
       <ng-container *ngIf="sets?.length > 0; else noSet">
-        <ion-list *ngFor="let set of sets" (click)="openViewSet(set.id)" (swipeleft)="importSet(set.id)" >
+        <ion-list *ngFor="let set of sets">
           <div>
-          <ion-card [ngClass]="set.user_id != currentUser_id ? 'darkBlue': ''" color="primary">
+          <ion-item-sliding #slidingSet>
+          <ion-item (click)="openViewSet(set.id)" [ngClass]="set.user_id != currentUser_id ? 'darkBlue': ''" color="primary">
             <ion-card-header>
-              <ion-card-title>{{set.title}}</ion-card-title>
+              <ion-card-title style="color: white" >{{set.title}}</ion-card-title>
 
                 <!-- username -->
                 <p [ngClass]="set.user_id == currentUser_id ? 'strong': ''">
@@ -51,8 +52,11 @@
                 {{set.description}}
               </ion-card-content>
             </div>
-
-          </ion-card>
+          </ion-item>
+            <ion-item-options side="right">
+              <button class="padding" color="light" ion-button (click)="copySet(slidingSet, set.id)">&emsp;&emsp;&emsp;&emsp;<ion-icon name="copy"></ion-icon>&emsp;&emsp;&emsp;&emsp;</button>
+            </ion-item-options>
+          </ion-item-sliding>
         </div>
         </ion-list>
       </ng-container>

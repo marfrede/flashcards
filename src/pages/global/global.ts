@@ -57,27 +57,35 @@ export class GlobalPage implements OnInit{
   ionViewDidLoad() {
   }
 
-  importSet(setID:string){
+  copySet(slidingSet, setID:string){
     //die userInfos müssen verändert werden, der inhalt kann ansonsten einfach kopiert werden!
     //beachte: collection muss foreach docweise kopiert werden...
 
     //INIT SET
-    this.setService.getSet(setID).then(set => {  
-        
-      let toCopySet:Set = set;
+    this.setService.getSet(setID).then(toCopySet => {  
+
+      slidingSet.close();
+     
+      if(this.currentUser_email == toCopySet.user_email){
+        console.log('own Set');
+        this.messagesService.showMessageTop('This Set Is Already Yours!');
+        return;
+      }
+
+      let newSet:Set = toCopySet;
 
       //USER INFO
-      toCopySet.user_id = this.currentUser_id;
-      toCopySet.user_email = this.currentUser_email;
-      toCopySet.user_username = this.currentUser_username;
+      newSet.user_id = this.currentUser_id;
+      newSet.user_email = this.currentUser_email;
+      newSet.user_username = this.currentUser_username;
 
       //SET INFO
-      toCopySet.copied = true;
-      toCopySet.private = true;
+      newSet.copied = true;
+      newSet.private = true;
 
-      this.setService.addSet(toCopySet).then(toCopySetId => {
+      this.setService.addSet(newSet).then(newSetId => {
       //  console.log('res (id des neuen sets): ', res);//re ist die ID des NEUEN sets, das geaddet wurde
-        
+
         //get all cards from the collection you want to copy
         this.setService.getCards$(setID).subscribe(cards => { 
           //console.log(cards); //cards hält alle cards der cards-collection also mit front back als obj innerhalb eines array (cards[])
@@ -85,9 +93,10 @@ export class GlobalPage implements OnInit{
           cards.forEach((card)=>{
             //console.log(card.front);
             //jetzt nur nicht loggen sondern adden ins neue set mit der res=id!
-            this.setService.addCard(toCopySetId, card);
+            this.setService.addCard(newSetId, card);
           });
         })
+        this.messagesService.showMessageTop('Set Copied!');
       });
     });
   
