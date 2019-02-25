@@ -5,5 +5,9 @@ export interface Set {
     user_id?: string,
     user_username?: string,
     user_email?: string,
-    timestamp?: firebase.firestore.Timestamp
+    creator_username?:string,
+    creator_email?:string,
+    timestamp?: firebase.firestore.Timestamp,
+    private?:boolean,
+    copied?:boolean
 }

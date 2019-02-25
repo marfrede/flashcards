@@ -22,6 +22,11 @@
       <ion-textarea class="text-input" rows="5" [(ngModel)]="set.description" color="secondary" name="description" placeholder="give your set a good description..."></ion-textarea>
     </ion-item>
     <br>
+      <ion-item>
+        <ion-label><strong>Private: </strong></ion-label>
+        <ion-toggle [(ngModel)]="set.private" name="private"></ion-toggle>
+      </ion-item>
+    <br>
     <button ion-button type="submit" color="secondary" block>Create And Open Set</button>
   </form>
 </ion-content>

@@ -19,7 +19,11 @@ export class AddSetPage implements OnInit {
     description: '',
     user_id: '',
     user_username: '',
-    user_email: ''
+    user_email: '',
+    creator_email: '',
+    creator_username: '',
+    private: false,
+    copied: false
   };
 
   userInfo = {
@@ -58,6 +62,9 @@ export class AddSetPage implements OnInit {
       this.set.user_email = this.userInfo.email;
       this.set.user_id = this.userInfo.id;
       this.set.user_username = this.userInfo.name;
+
+      this.set.creator_email = this.userInfo.email;
+      this.set.creator_username = this.userInfo.name;
 
       if(this.set.title == ''){
         this.messageService.showErrString('No Title','Your Set Needs A Title!');

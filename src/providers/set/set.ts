@@ -12,7 +12,7 @@ export class SetProvider {
   setsCollection: AngularFirestoreCollection<Set>;
 
   constructor(public afs: AngularFirestore) {
-    this.setsCollection = this.afs.collection('sets', ref => ref.orderBy('timestamp','desc'));
+    this.setsCollection = this.afs.collection('sets', ref => ref.where('private','==',false).orderBy('timestamp','desc'));
   }
 
   //copyToSet

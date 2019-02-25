@@ -1,11 +1,11 @@
+import { UsernameProvider } from './../../providers/username/username';
 import { MessagesProvider } from './../../providers/messages/messages';
 import { SortingProvider } from './../../providers/sorting/sorting';
 import { AuthProvider } from './../../providers/auth/auth';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Toolbar, Select } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Select } from 'ionic-angular';
 import { SetProvider } from '../../providers/set/set';
 import { Set} from '../../models/set';
-import { Card} from '../../models/card';
 
 @IonicPage()
 @Component({
@@ -14,17 +14,11 @@ import { Card} from '../../models/card';
 })
 export class GlobalPage implements OnInit{
 
-  //copy set
-  toCopySet:Set;
-  oldToCopySetID:string;
-  toCopyCards:Card[]
-  currentUser_email:string;
-  currentUser_username:string;
-
-
   sets_const:Set[];
   sets:Set[];
   currentUser_id:string;
+  currentUser_email:string;
+  currentUser_username:string;
 
   currentOrder:string;
   searchInput: string;
@@ -36,22 +30,19 @@ export class GlobalPage implements OnInit{
               private authService: AuthProvider,
               public messagesService: MessagesProvider,
               private setService: SetProvider,
+              private usernameService: UsernameProvider,
               private sortingService: SortingProvider) {
   }
 
   ngOnInit(){
     this.currentOrder = 'date-desc';   
     this.authService.getCurrentUser().then(user => {
-      console.log('USER EMAIL:', user.email);
       if(user && user.uid){
         this.currentUser_id = user.uid;
         this.currentUser_email = user.email;
-        if(user.displayName === null){
-          this.currentUser_username = '';
-        }else{
-          this.currentUser_username = user.displayName;
-        }
-
+        this.usernameService.getCurrentUser().then(uname => {
+          this.currentUser_username = uname;
+        });
       }
     });
     this.setService.getSets$().subscribe(sets => {
@@ -66,11 +57,6 @@ export class GlobalPage implements OnInit{
   ionViewDidLoad() {
   }
 
-  //nur für testzwecke!
-  logSetID(setID:string){
-    console.log(setID);
-  }
-
   importSet(setID:string){
     //die userInfos müssen verändert werden, der inhalt kann ansonsten einfach kopiert werden!
     //beachte: collection muss foreach docweise kopiert werden...
@@ -78,31 +64,28 @@ export class GlobalPage implements OnInit{
     //INIT SET
     this.setService.getSet(setID).then(set => {  
         
-      this.toCopySet = set;
-      this.oldToCopySetID = this.toCopySet.id;
+      let toCopySet:Set = set;
 
       //USER INFO
-      this.toCopySet.user_id = this.currentUser_id;
-      this.toCopySet.user_email = this.currentUser_email;
-      this.toCopySet.user_username = this.currentUser_username;
+      toCopySet.user_id = this.currentUser_id;
+      toCopySet.user_email = this.currentUser_email;
+      toCopySet.user_username = this.currentUser_username;
 
       //SET INFO
-      this.toCopySet.title = this.toCopySet.title + ' [copied]';
+      toCopySet.copied = true;
+      toCopySet.private = true;
 
-      this.setService.addSet(this.toCopySet).then(res => {
+      this.setService.addSet(toCopySet).then(toCopySetId => {
       //  console.log('res (id des neuen sets): ', res);//re ist die ID des NEUEN sets, das geaddet wurde
         
         //get all cards from the collection you want to copy
-        this.setService.getCards$(this.oldToCopySetID).subscribe(cards => { 
+        this.setService.getCards$(setID).subscribe(cards => { 
           //console.log(cards); //cards hält alle cards der cards-collection also mit front back als obj innerhalb eines array (cards[])
       
           cards.forEach((card)=>{
             //console.log(card.front);
             //jetzt nur nicht loggen sondern adden ins neue set mit der res=id!
-            this.setService.addCard(res, card).then(()=>{
-                //console.log('ADDED CARDS!');
-                ;
-             });
+            this.setService.addCard(toCopySetId, card);
           });
         })
       });
