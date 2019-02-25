@@ -45,7 +45,7 @@ export class GlobalPage implements OnInit{
         });
       }
     });
-    this.setService.getSets$().subscribe(sets => {
+    this.setService.getPublicSets$().subscribe(sets => {
       this.sets_const = sets;
       this.sortingService.sortSetsByCurrent(this.sets_const,this.currentOrder).then(res => {
         this.sets = res;

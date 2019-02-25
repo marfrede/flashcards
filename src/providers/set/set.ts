@@ -12,7 +12,7 @@ export class SetProvider {
   setsCollection: AngularFirestoreCollection<Set>;
 
   constructor(public afs: AngularFirestore) {
-    this.setsCollection = this.afs.collection('sets', ref => ref.where('private','==',false).orderBy('timestamp','desc'));
+    this.setsCollection = this.afs.collection('sets', ref => ref.orderBy('timestamp','desc'));
   }
 
   //copyToSet
@@ -20,7 +20,17 @@ export class SetProvider {
     console.log('in copyToSet');
   }
 
-  getSets$():Observable<Set[]>{
+  getPublicSets$():Observable<Set[]>{
+    return this.afs.collection('sets', ref => ref.where('private','==',false).orderBy('timestamp','desc')).snapshotChanges().pipe(map(changes => {
+      return changes.map(a => {
+        const data = a.payload.doc.data() as Set;
+        data.id = a.payload.doc.id;
+        return data;
+      })
+    }))
+  }
+
+  getAllSets$():Observable<Set[]>{
     return this.setsCollection.snapshotChanges().pipe(map(changes => {
       return changes.map(a => {
         const data = a.payload.doc.data() as Set;
@@ -92,7 +102,7 @@ export class SetProvider {
   getSet(pId:string):Promise<Set>{
     return new Promise<Set>((resolve, reject)=>{
       let set:Set;
-      this.getSets$().subscribe(setsArr => {
+      this.getAllSets$().subscribe(setsArr => {
         set = setsArr.find(set => set.id == pId);
         if(set) resolve (set);
         else    reject(set);

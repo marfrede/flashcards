@@ -26,7 +26,7 @@
       
       <!-- list of sets -->
       <ng-container *ngIf="sets?.length > 0; else noSet">
-        <ion-list *ngFor="let set of sets" (click)="openViewSet(set.id)" (swipeleft)="importSet(set.id)" (swiperight)="logSetID(set.id)" >
+        <ion-list *ngFor="let set of sets" (click)="openViewSet(set.id)" (swipeleft)="importSet(set.id)" >
           <div>
           <ion-card [ngClass]="set.user_id != currentUser_id ? 'darkBlue': ''" color="primary">
             <ion-card-header>

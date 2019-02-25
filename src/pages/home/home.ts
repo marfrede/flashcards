@@ -108,6 +108,7 @@ export class HomePage {
   }
 
   openViewSet(id:string){
+    console.log('opening ',id);
     this.navCtrl.push('ViewSetPage',{set_id: id});
   }
 

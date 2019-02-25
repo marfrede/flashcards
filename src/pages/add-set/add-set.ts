@@ -72,6 +72,7 @@ export class AddSetPage implements OnInit {
         if(this.set.description == '' || this.set.description.length < 20){
           this.messageService.showErrString('No Description','Your Set´s Description Needs At Least 20 Characters!')
         }else{
+          console.log('private: ',this.set.private);
           this.setService.addSet(this.set).then(res => {
             this.set.title = '';
             this.set.description = '';
