@@ -66,11 +66,14 @@ export class AddSetPage implements OnInit {
       this.set.creator_email = this.userInfo.email;
       this.set.creator_username = this.userInfo.name;
 
-      if(this.set.title == ''){
-        this.messageService.showErrString('No Title','Your Set Needs A Title!');
+      if(this.set.title == '' || this.set.title.length >= 16){
+        if(this.set.title == '') this.messageService.showErrString('No Title','Your Set Needs A Title!');
+        else this.messageService.showErrString('Title To Long','The Maximum Number of Characters Is 15.')
       }else{
-        if(this.set.description == '' || this.set.description.length < 20){
-          this.messageService.showErrString('No Description','Your Set´s Description Needs At Least 20 Characters!')
+        if(this.set.description == '' || this.set.description.length < 10 || this.set.description.length > 120){
+          if(this.set.description.length > 120)
+          this.messageService.showErrString('Description To Long', 'The Maximum Number of Characters Is 120.')
+          this.messageService.showErrString('No Description','Your Set´s Description Needs At Least 10 Characters!')
         }else{
           console.log('private: ',this.set.private);
           this.setService.addSet(this.set).then(res => {

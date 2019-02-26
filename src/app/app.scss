@@ -52,6 +52,10 @@
     .fullCard {
         padding-top: 30%;
         padding-bottom: 30%;
+        border-left: 15px solid green !important;
+        border-right: 15px solid red !important;
+        border-bottom: 15px solid orange !important;
+        border-top: 15px solid black !important;
     }
     .flashcard-back-full {
         text-align: center;

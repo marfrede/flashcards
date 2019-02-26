@@ -1,3 +1,4 @@
+import { Counter } from './../../models/counter';
 import { LangProvider } from './../../providers/lang/lang';
 import { WictionaryProvider } from './../../providers/wictionary/wictionary';
 import { Component, OnInit } from '@angular/core';
@@ -9,11 +10,13 @@ import { SetProvider } from './../../providers/set/set';
 
 import { TextToSpeech } from "@ionic-native/text-to-speech";
 
+
 @IonicPage()
 @Component({
   selector: 'page-quiz',
   templateUrl: 'quiz.html',
 })
+
 export class QuizPage implements OnInit {
 
 
@@ -31,6 +34,11 @@ export class QuizPage implements OnInit {
 
   before_card:Card;
   rand_card:Card;
+  counter:Counter = {
+    easy : 0,
+    medium : 0,
+    hard : 0
+  };
   cardShowsFront:boolean;
 
   constructor(public navCtrl: NavController, 
@@ -48,8 +56,25 @@ export class QuizPage implements OnInit {
     this.setService.getCards$(this.set_id).subscribe(cards => {
       this.cards = cards;
       this.cardShowsFront = true;
-      this.pick();
+
+      //pick random card with probability distribution with regard to card.difficulty
+      this.getCard().then(res => {
+        this.rand_card = res;
+      }).catch(err => {
+        this.getCard().then(res => {
+          this.rand_card = res;
+        }).catch(err => {
+          this.getCard().then(res => {
+            this.rand_card = res;
+          }).catch(res => {
+            this.rand_card = res;
+          })
+        })
+      });
+    
+      if(this.rand_card) this.getInformationOn(this.rand_card.back);
     });
+    
     this.wictionaryService.get$().subscribe(res=>{
       console.log('WICTIONARY PROVIDER: ',res);
     })
@@ -57,11 +82,54 @@ export class QuizPage implements OnInit {
     this.phrases = [];
   }
 
-  pick(){
-    this.before_card = this.rand_card; //unimportant for initial pick()
-    this.rand_card = this.cards[this.randCardsIndex()];
-    if(this.rand_card == this.before_card && this.cards.length > 1) this.pick(); //pick again if it gets the same card
-    if(this.rand_card) this.getInformationOn(this.rand_card.back);
+  pick_():Promise<Card>{
+    return new Promise(resolve => {
+      let card:Card = this.cards[this.randCardsIndex()];
+      resolve(card);
+    })
+  }
+
+  getCard():Promise<Card>{
+    let randcard:Card;
+    return new Promise<Card>((resolve, reject) => { 
+      this.pick_().then(randi => {
+
+        randcard = randi; //get 'completely random' card
+      
+        switch (randcard.diff) {
+
+
+          case Diff.easy: //you have to pick an easy card three times before it´s actually taken - very rare
+            this.counter.easy++;
+            if(this.counter.easy == 3){
+              this.counter.easy = 0;
+              resolve(randcard);
+            }else{
+              reject(randcard);
+            }
+            break;
+
+
+          case Diff.medium: //you have to pick an medium card two times before it´s actually taken - rare
+            this.counter.medium++;
+            if(this.counter.medium == 2){
+              this.counter.medium = 0;
+              resolve(randcard);
+            }else{
+              reject(randcard);
+            }
+            break;
+
+
+          case Diff.hard: //hard cards are taken right away - most likely
+            resolve(randcard);
+            break;
+          default:
+            console.log('error');
+            break;
+        }
+      });
+    });
   }
 
   getInformationOn(searchText:string){
@@ -108,28 +176,45 @@ export class QuizPage implements OnInit {
 
   nextCard(){
     if(!this.cardShowsFront) this.turnCard();
-    this.pick();
+
+    //pick random card with probability distribution with regard to card.difficulty
+    this.getCard().then(res => {
+      this.rand_card = res;
+    }).catch(err => {
+      this.getCard().then(res => {
+        this.rand_card = res;
+      }).catch(err => {
+        this.getCard().then(res => {
+          this.rand_card = res;
+        }).catch(res => {
+          this.rand_card = res;
+        })
+      })
+    });
+  
+    if(this.rand_card) this.getInformationOn(this.rand_card.back);
+
   }
 
   swipeLeft(event: any, toUpdate:Card): void {
-    console.log('Swipe Left', event);
+    console.log('easy');
     this.updEasy(toUpdate);
     this.nextCard();
   }
 
   swipeRight(event: any, toUpdate:Card): void {
-      console.log('Swipe Right', event);
+      console.log('hard');
       this.updHard(toUpdate);
       this.nextCard();
   }
 
   swipeUp(event: any, toUpdate:Card): void {
-      console.log('Swipe Up', event);
+      console.log('nuffin');
       this.nextCard();
   }
 
   swipeDown(event: any, toUpdate:Card): void {
-      console.log('Swipe Down', event);
+      console.log('medium');
       this.updMedium(toUpdate);
       this.nextCard();
   }
