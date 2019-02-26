@@ -34,7 +34,7 @@
               <ion-card-title style="color: white" >{{set.title}}</ion-card-title>
 
                 <!-- username -->
-                <p [ngClass]="set.user_id == currentUser_id ? 'strong': ''">
+                <p [ngClass]="set.user_id == currentUser_id ? 'strong': 'notstrong'">
                   <span *ngIf="set.user_username && set.user_username !='' ">
                     {{set.user_username}} (
                   </span>
