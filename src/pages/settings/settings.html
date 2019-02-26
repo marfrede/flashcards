@@ -11,18 +11,62 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-list-header>
+    Peronal Information
+  </ion-list-header>
   <ion-card>
     <div class="padding">
       <h6><strong>E-Mail: </strong>{{email}}</h6>
       <p *ngIf="username && username != ''"><strong>Nickname: </strong>{{username}}</p>
       <p><strong>Uid: </strong>{{uid}}</p>
     </div>
-  </ion-card>
-
-  
-  <ion-footer no-shadow>
-    <ion-toolbar position="bottom">
+    <ion-toolbar padding>
       <button (click)='tryLogout()' style="background-color: #ef9300" ion-button full>Logout</button>
     </ion-toolbar>
-  </ion-footer>
+  </ion-card>
+
+
+  <ion-list radio-group [(ngModel)]="curLang" (ionChange)="onChange()">
+
+      <ion-list-header>
+        Pronunciation Language
+      </ion-list-header>
+    
+      <ion-item>
+        <ion-label>German (DE)</ion-label>
+        <ion-radio value="de-DE"></ion-radio>
+      </ion-item>
+    
+      <ion-item checked="true">
+        <ion-label>English (GB)</ion-label>
+        <ion-radio value="en-GB"></ion-radio>
+      </ion-item>
+    
+      <ion-item>
+        <ion-label>English (US)</ion-label>
+        <ion-radio value="en-US"></ion-radio>
+      </ion-item>
+    
+      <ion-item>
+        <ion-label>Spanish (ES)</ion-label>
+        <ion-radio value="es-ES"></ion-radio>
+      </ion-item>
+    
+      <ion-item>
+        <ion-label>Italian (IT)</ion-label>
+        <ion-radio value="it-IT"></ion-radio>
+      </ion-item>
+    
+      <ion-item>
+        <ion-label>French (FR)</ion-label>
+        <ion-radio value="fr-FR"></ion-radio>
+      </ion-item>
+    
+      <ion-item>
+        <ion-label>Turkish (TR)</ion-label>
+        <ion-radio value="tr-TR"></ion-radio>
+      </ion-item>
+    
+    </ion-list>
+
 </ion-content>

@@ -26,6 +26,7 @@
   </div>
 
   <div  *ngIf="cardShowsFront == false" padding>
+    <button ion-button icon-only (click)="speak(rand_card.back)"><ion-icon name="volume-up"></ion-icon></button>
     <ng-container *ngIf="details && details != ''; else noD">
       <p><strong>Details:</strong><br>
       <span>{{details}}<br></span></p>
@@ -36,9 +37,6 @@
         <span>No Details Available Right Now<br></span></p>
       </div>
     </ng-template>
-  </div>
-
-  <div  *ngIf="cardShowsFront == false" padding>
     <ng-container *ngIf="phrases && phrases[1]; else noP" >
       <p><strong>Phrases:</strong><br>
       <span *ngFor="let phrase of phrases" >{{phrase}}<br></span></p>

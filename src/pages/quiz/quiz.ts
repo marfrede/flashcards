@@ -1,3 +1,4 @@
+import { LangProvider } from './../../providers/lang/lang';
 import { WictionaryProvider } from './../../providers/wictionary/wictionary';
 import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -5,6 +6,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Card, Diff } from './../../models/card';
 import { WordnikProvider } from './../../providers/wordnik/wordnik';
 import { SetProvider } from './../../providers/set/set';
+
+import { TextToSpeech } from "@ionic-native/text-to-speech";
 
 @IonicPage()
 @Component({
@@ -34,7 +37,9 @@ export class QuizPage implements OnInit {
               public navParams: NavParams, 
               private setService: SetProvider,
               private wordnikService: WordnikProvider,
-              private wictionaryService: WictionaryProvider) {
+              private wictionaryService: WictionaryProvider,
+              private tts: TextToSpeech,
+              private langService:LangProvider) {
   }
 
   ngOnInit(){
@@ -88,7 +93,15 @@ export class QuizPage implements OnInit {
 
   turnCard(){ this.cardShowsFront = this.cardShowsFront? false : true; }
 
-  //testing
+  speak(toSpeak:string){
+    
+    this.tts.speak({
+        text: toSpeak,
+        locale: this.langService.getLang(),
+        rate: 1.3
+    });
+  }
+
   swipeAll(event: any): any {
     console.log('Swipe All', event);
   }

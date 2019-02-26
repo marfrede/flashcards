@@ -1,3 +1,4 @@
+import { LangProvider } from './../../providers/lang/lang';
 import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
@@ -14,10 +15,14 @@ export class SettingsPage implements OnInit{
   uid: string;
   username: string;
 
+  //LANGUAGE
+    curLang:string;
+
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               private authService: AuthProvider,
-              private usernameService: UsernameProvider) {
+              private usernameService: UsernameProvider,
+              private langService: LangProvider) {
   }
 
   ngOnInit() {
@@ -29,6 +34,11 @@ export class SettingsPage implements OnInit{
       this.email = user.email? user.email : '';
       this.uid = user.uid? user.uid : '';
     });
+  }
+
+  onChange(){
+    this.langService.setLang(this.curLang);
+    console.log(this.langService.getLang());
   }
 
   ionViewWillLoad() {

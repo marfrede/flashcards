@@ -24,6 +24,10 @@ import { WordnikProvider } from '../providers/wordnik/wordnik';
 import { AngularFirestore, AngularFirestoreModule } from 'angularfire2/firestore';
 import { HttpClientModule } from '@angular/common/http';
 
+/*NATIVE*/
+import { TextToSpeech } from "@ionic-native/text-to-speech";
+import { LangProvider } from '../providers/lang/lang';
+
 @NgModule({
   declarations: [
     MyApp
@@ -51,7 +55,9 @@ import { HttpClientModule } from '@angular/common/http';
     SetProvider,
     SortingProvider,
     WictionaryProvider,
-    WordnikProvider
+    WordnikProvider,
+    TextToSpeech,
+    LangProvider
   ]
 })
 export class AppModule {}
