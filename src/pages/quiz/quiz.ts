@@ -1,6 +1,5 @@
 import { Counter } from './../../models/counter';
 import { LangProvider } from './../../providers/lang/lang';
-import { WictionaryProvider } from './../../providers/wictionary/wictionary';
 import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
@@ -45,7 +44,6 @@ export class QuizPage implements OnInit {
               public navParams: NavParams, 
               private setService: SetProvider,
               private wordnikService: WordnikProvider,
-              private wictionaryService: WictionaryProvider,
               private tts: TextToSpeech,
               private langService:LangProvider) {
   }
@@ -75,9 +73,6 @@ export class QuizPage implements OnInit {
       if(this.rand_card) this.getInformationOn(this.rand_card.back);
     });
     
-    this.wictionaryService.get$().subscribe(res=>{
-      console.log('WICTIONARY PROVIDER: ',res);
-    })
     this.details = '';
     this.phrases = [];
   }

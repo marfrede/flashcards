@@ -18,7 +18,6 @@ import { AuthProvider } from '../providers/auth/auth';
 import { UsernameProvider } from '../providers/username/username';
 import { SetProvider } from '../providers/set/set';
 import { SortingProvider } from '../providers/sorting/sorting';
-import { WictionaryProvider } from '../providers/wictionary/wictionary';
 import { WordnikProvider } from '../providers/wordnik/wordnik';
   // foreign
 import { AngularFirestore, AngularFirestoreModule } from 'angularfire2/firestore';
@@ -54,7 +53,6 @@ import { LangProvider } from '../providers/lang/lang';
     UsernameProvider,
     SetProvider,
     SortingProvider,
-    WictionaryProvider,
     WordnikProvider,
     TextToSpeech,
     LangProvider
