@@ -18,6 +18,7 @@
 </ion-header>
 
 <ion-content padding>
+  <h3 style="text-align: center">Edit Set</h3>
   <form *ngIf="editSet"  (ngSubmit)="submit()">
     <ion-label><strong>Titel: </strong></ion-label>
     <ion-item>
@@ -29,7 +30,7 @@
       <ion-textarea class="text-input" rows="5" [(ngModel)]="editSet.description" color="secondary" name="description" placeholder="give your editSet a good description..."></ion-textarea>
     </ion-item>
     <br>
-      <ion-item>
+      <ion-item *ngIf="editSet && editSet.user_email == editSet.creator_email" >
         <ion-label><strong>Private: </strong></ion-label>
         <ion-toggle [(ngModel)]="editSet.private" name="private"></ion-toggle>
       </ion-item>
