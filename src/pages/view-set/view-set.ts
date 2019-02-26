@@ -208,7 +208,7 @@ export class ViewSetPage {
     if(this.newcard.front == '' || this.newcard.back == '' || !this.isOwner){
       this.messagesService.showErrString('Not Enough Input','Your card needs a front text and a back text.');
     }else if(this.newcard.front.length > 50 || this.newcard.back.length > 50){
-      this.messagesService.showErrString('Too Much Input','The front and back of your card must not be longer than 50 characters.');
+      this.messagesService.showErrString('Too Much Input','The front and back of your card must be within 50 characters.');
     }else{
       this.setService.addCard(this.set_id, this.newcard).then(()=>{
         this.newcard.front = this.newcard.back = '';
