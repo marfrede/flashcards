@@ -11,22 +11,30 @@
 </ion-header>
 
 <ion-content padding>
+
   <form (ngSubmit)="submit()">
+
     <ion-label><strong>Titel: </strong></ion-label>
     <ion-item>
-      <ion-input class="text-input" type="text" [(ngModel)]="set.title" name="title" color="secondary" placeholder="give your set a title..."></ion-input>
-    </ion-item>
-    <br>
+      <ion-input class="text-input" type="text" [(ngModel)]="set.title" name="title" 
+                color="secondary" placeholder="give your set a title...">
+      </ion-input>
+    </ion-item><br>
+
     <ion-label><strong>Description: </strong></ion-label>
     <ion-item>
-      <ion-textarea class="text-input" rows="5" [(ngModel)]="set.description" color="secondary" name="description" placeholder="give your set a good description of maximal 120 characters..."></ion-textarea>
-    </ion-item>
-    <br>
-      <ion-item>
-        <ion-label><strong>Private: </strong></ion-label>
-        <ion-toggle [(ngModel)]="set.private" name="private"></ion-toggle>
-      </ion-item>
-    <br>
+      <ion-textarea class="text-input" rows="5" [(ngModel)]="set.description" 
+                    color="secondary" name="description" 
+                    placeholder="give your set a good description of maximal 120 characters...">
+      </ion-textarea>
+    </ion-item><br>
+
+    <ion-item>
+      <ion-label><strong>Private: </strong></ion-label>
+      <ion-toggle [(ngModel)]="set.private" name="private"></ion-toggle>
+    </ion-item><br>
+
     <button ion-button type="submit" color="secondary" block>Create And Open Set</button>
   </form>
+
 </ion-content>

@@ -26,8 +26,8 @@ export class MyApp {
         this.nav.setRoot(this.rootPage);
         let username:string;
         usernameService.getCurrentUser().then(un => {
-          if(un) username = un;
-          else    username = '';
+          if(un) username = un; //Begrüßung mit Username Adresse
+          else    username = '';//Begrüßung mit E-Mail Adresse
           if(res.email){
             if(username && username!=''){
               mService.welcomeUser(username);
@@ -37,7 +37,7 @@ export class MyApp {
           }
         });
       } else {
-        this.rootPage = 'LoginPage';
+        this.rootPage = 'LoginPage'; //If User is not logged in
         this.nav.setRoot(this.rootPage);
       }
     });

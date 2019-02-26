@@ -8,8 +8,7 @@
     <ion-searchbar placeholder="search for title... or user... or e-mail.." cancelButtonText='Cancel'
     [(ngModel)]="searchInput"
     (ionFocus)="onFocus($event)"
-    (ionInput)="onInput($event)"
-    (ionCancel)="onCancel($event)">
+    (ionInput)="onInput($event)">
     </ion-searchbar>
     <ion-buttons end>
       <button ion-button icon-only (click)='openSelect()'>
@@ -21,37 +20,39 @@
 
 </ion-header>
 
-<ion-content (ionScroll)="onScroll($event)" padding>
+<ion-content padding>
     <div >      
       
       <!-- list of sets -->
       <ng-container *ngIf="sets?.length > 0; else noSet">
         <ion-list *ngFor="let set of sets">
-          <div>
-          <ion-item-sliding #slidingSet>
-          <ion-item (click)="openViewSet(set.id)" [ngClass]="set.user_id != currentUser_id ? 'darkBlue': 'lightBlue'">
-            <ion-card-header>
-              <ion-card-title style="color: white" >{{set.title}}</ion-card-title>
+            <ion-item-sliding #slidingSet>
 
-                <!-- username -->
-                <p [ngClass]="set.user_id == currentUser_id ? 'strong': 'notstrong'">
-                  <span *ngIf="set.user_username && set.user_username !='' ">
-                    {{set.user_username}} (
-                  </span>
-                  {{set.user_email}}
-                  <span *ngIf="set.user_username && set.user_username !='' ">
-                    )
-                  </span>
-                </p>
-                <!-- // username -->
-            <p style="color: #e5e5e5;">{{set.description}}</p>
-            </ion-card-header>
-          </ion-item>
-            <ion-item-options side="right">
-              <button class="padding" color="light" ion-button (click)="copySet(slidingSet, set.id)">&emsp;&emsp;&emsp;&emsp;<ion-icon name="download"></ion-icon>&emsp;&emsp;&emsp;&emsp;</button>
-            </ion-item-options>
+              <ion-item (click)="openViewSet(set.id)" [ngClass]="set.user_id != currentUser_id ? 'darkBlue': 'lightBlue'">
+
+                <ion-card-header>
+                  <ion-card-title style="color: white" >{{set.title}}</ion-card-title>
+                  <!-- username or email -->
+                  <p [ngClass]="set.user_id == currentUser_id ? 'strong': 'notstrong'">
+                    <span *ngIf="set.user_username && set.user_username !='' ">
+                      {{set.user_username}} (
+                    </span>
+                    {{set.user_email}}
+                    <span *ngIf="set.user_username && set.user_username !='' ">
+                      )
+                    </span>
+                  </p>
+                  <!-- // username or email-->
+                  <p style="color: #e5e5e5;">{{set.description}}</p>
+                </ion-card-header>
+
+              </ion-item>
+
+              <ion-item-options side="right">
+                <button class="padding" color="light" ion-button (click)="copySet(slidingSet, set.id)">&emsp;&emsp;&emsp;&emsp;<ion-icon name="download"></ion-icon>&emsp;&emsp;&emsp;&emsp;</button>
+              </ion-item-options>
+
           </ion-item-sliding>
-        </div>
         </ion-list>
       </ng-container>
       <!-- // list of sets  -->
@@ -65,6 +66,7 @@
 
     </div>
 
+    <!-- shown if user opens it per button click -->
     <ion-select class="hidesmthn" #selectOrder interface="action-sheet" (ionChange)="submit($event)">
       <ion-option selected="true" value="date-desc">Date (new - old) (Standard)</ion-option>
       <ion-option value="date-asc">Date (old - new)</ion-option>

@@ -1,14 +1,13 @@
+/*IONIC*/
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-
 /*FIREBASE*/ 
-import { AngularFireModule } from 'angularfire2';
 import { FIREBASE_CONFIG } from './app.firebase.config';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestore, AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from "angularfire2/auth";
 
 /*PROVIDERS*/
@@ -19,13 +18,14 @@ import { UsernameProvider } from '../providers/username/username';
 import { SetProvider } from '../providers/set/set';
 import { SortingProvider } from '../providers/sorting/sorting';
 import { WordnikProvider } from '../providers/wordnik/wordnik';
+import { LangProvider } from '../providers/lang/lang';
   // foreign
-import { AngularFirestore, AngularFirestoreModule } from 'angularfire2/firestore';
 import { HttpClientModule } from '@angular/common/http';
 
 /*NATIVE*/
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 import { TextToSpeech } from "@ionic-native/text-to-speech";
-import { LangProvider } from '../providers/lang/lang';
 
 @NgModule({
   declarations: [

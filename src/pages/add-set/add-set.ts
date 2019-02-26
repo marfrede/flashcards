@@ -14,7 +14,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 })
 export class AddSetPage implements OnInit {
 
-  set: Set = {
+  set: Set = { //to add Set
     title: '',
     description: '',
     user_id: '',
@@ -41,18 +41,15 @@ export class AddSetPage implements OnInit {
   }
 
   ngOnInit(){
-    this.usernameService.getCurrentUser().then(username => {
+    this.usernameService.getCurrentUser().then(username => { //get username
       if(username) this.userInfo.name = username;
       else         this.userInfo.name = '';
     });
 
-    this.authService.getCurrentUser().then(user => {
+    this.authService.getCurrentUser().then(user => { //get user email and id
       this.userInfo.email = user.email? user.email : '';
       this.userInfo.id = user.uid? user.uid : '';
     });
-  }
-
-  ionViewDidLoad() {
   }
 
   submit(){
@@ -64,23 +61,22 @@ export class AddSetPage implements OnInit {
       this.set.user_username = this.userInfo.name;
 
       this.set.creator_email = this.userInfo.email;
-      this.set.creator_username = this.userInfo.name;
+      this.set.creator_username = this.userInfo.name; //if adding a new set creator always == user
 
       if(this.set.title == '' || this.set.title.length >= 16){
         if(this.set.title == '') this.messageService.showErrString('No Title','Your Set Needs A Title!');
         else this.messageService.showErrString('Title To Long','The Maximum Number of Characters Is 15.')
       }else{
         if(this.set.description == '' || this.set.description.length < 10 || this.set.description.length > 120){
-          if(this.set.description.length > 120)
-          this.messageService.showErrString('Description To Long', 'The Maximum Number of Characters Is 120.')
+          if(this.set.description.length > 120) this.messageService.showErrString('Description To Long', 'The Maximum Number of Characters Is 120.')
           this.messageService.showErrString('No Description','Your Set´s Description Needs At Least 10 Characters!')
         }else{
-          console.log('private: ',this.set.private);
           this.setService.addSet(this.set).then(res => {
             this.set.title = '';
-            this.set.description = '';
-            this.navCtrl.pop();
-            this.navCtrl.push('ViewSetPage',{set_id: res});
+            this.set.description = ''; //clean form
+            this.navCtrl.pop().then(()=>{
+              this.navCtrl.push('ViewSetPage',{set_id: res}); //get to your new set
+            });
           });
         }
       }

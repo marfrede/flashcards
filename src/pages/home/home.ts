@@ -100,11 +100,16 @@ export class HomePage {
   }
   
   onInput($event){
+    console.log('searchInput:>',this.searchInput,'<');
+    console.log('const: ',this.sets_const);
+    console.log('_: ',this.sets);
     if(this.searchInput) this.sets = this.sets_const.filter(set => set.title.toUpperCase().includes(this.searchInput.toUpperCase()));
-  }
-
-  onCancel($event){
-    console.log($event);
+    if(this.searchInput && this.searchInput == ''){
+      console.log('empty input');
+      this.sets = this.sets_const;
+    } 
+    console.log('const: ',this.sets_const);
+    console.log('_: ',this.sets);
   }
 
   openViewSet(id:string){

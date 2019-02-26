@@ -36,6 +36,8 @@ export class GlobalPage implements OnInit{
 
   ngOnInit(){
     this.currentOrder = 'date-desc';   
+
+    //init user
     this.authService.getCurrentUser().then(user => {
       if(user && user.uid){
         this.currentUser_id = user.uid;
@@ -45,71 +47,62 @@ export class GlobalPage implements OnInit{
         });
       }
     });
+
+    //init sets
     this.setService.getPublicSets$().subscribe(sets => {
       this.sets_const = sets;
       this.sortingService.sortSetsByCurrent(this.sets_const,this.currentOrder).then(res => {
         this.sets = res;
       });
     })
+
+    //
     this.searchInput = '';
   }
+  
 
-  ionViewDidLoad() {
-  }
+  copySet(slidingSet, toCopySetID:string){
 
-  copySet(slidingSet, setID:string){
-    //die userInfos müssen verändert werden, der inhalt kann ansonsten einfach kopiert werden!
-    //beachte: collection muss foreach docweise kopiert werden...
+    
+    this.setService.getSet(toCopySetID).then(toCopySet => {  
 
-    //INIT SET
-    this.setService.getSet(setID).then(toCopySet => {  
-
-      slidingSet.close();
+      slidingSet.close(); //html element slides back after click
      
       if(this.currentUser_email == toCopySet.user_email){
         console.log('own Set');
         this.messagesService.showMessageTop('This Set Is Already Yours!');
-        return;
+        return; //no sense for downloading own set
       }
 
-      let newSet:Set = toCopySet;
+      let newSet:Set = toCopySet; //new set is a copy of toCopySet
 
       //USER INFO
       newSet.user_id = this.currentUser_id;
       newSet.user_email = this.currentUser_email;
-      newSet.user_username = this.currentUser_username;
+      newSet.user_username = this.currentUser_username; //new set becomes the set owned by current user
 
       //SET INFO
       newSet.copied = true;
-      newSet.private = true;
+      newSet.private = true; //copied sets are never public or not copied
 
-      this.setService.addSet(newSet).then(newSetId => {
-      //  console.log('res (id des neuen sets): ', res);//re ist die ID des NEUEN sets, das geaddet wurde
-
-        //get all cards from the collection you want to copy
-        this.setService.getCards$(setID).subscribe(cards => { 
-          //console.log(cards); //cards hält alle cards der cards-collection also mit front back als obj innerhalb eines array (cards[])
+      this.setService.addSet(newSet).then(newSetId => { //addSet():Promise<string (id of added set) > 
+        
+        this.setService.getCards$(toCopySetID).subscribe(cards => { //after adding newSet it gets a copied collection of the toCopySets cards
       
           cards.forEach((card)=>{
-            //console.log(card.front);
-            //jetzt nur nicht loggen sondern adden ins neue set mit der res=id!
-            this.setService.addCard(newSetId, card);
+            this.setService.addCard(newSetId, card); //no better method in firestore to copy a whole collection so far
           });
         })
         this.messagesService.showMessageTop('Set Copied!');
+
       });
+
+
     });
-  
   }
 
   openViewSet(id:string){
     this.navCtrl.push('ViewSetPage',{set_id: id});
-  }
-
-  onScroll($event){
-    if($event && $event.scrollTop == 0){
-      console.log('TOPSCROLL');
-    }
   }
 
   openSelect() {
@@ -144,12 +137,14 @@ export class GlobalPage implements OnInit{
        this.currentOrder = 'date-desc';
         break;
     }
-    this.sortingService.sortSetsByCurrent(this.sets,this.currentOrder).then(res => {
+    this.sortingService.sortSetsByCurrent(this.sets,this.currentOrder).then(res => { 
+      //sort current shown sets (current = sets that aren´t filtered by search function)
       this.sets = res;
     }).catch(error => {
       console.log(error);
     });
     this.sortingService.sortSetsByCurrent(this.sets_const,this.currentOrder).then(res => {
+      //sort all sets
       this.sets_const = res;
     }).catch(error => {
       console.log(error);
@@ -165,11 +160,10 @@ export class GlobalPage implements OnInit{
   
   onInput($event){
     if(this.searchInput)
-    this.sets = this.sets_const.filter(set => set.title.toUpperCase().includes(this.searchInput.toUpperCase()) || set.user_username.toUpperCase().includes(this.searchInput.toUpperCase()) || set.user_email.toUpperCase().includes(this.searchInput.toUpperCase()));
-  }
-
-  onCancel($event){
-    console.log($event);
+    this.sets = this.sets_const.filter(set => set.title.toUpperCase().includes(this.searchInput.toUpperCase()) 
+                                            || set.user_username.toUpperCase().includes(this.searchInput.toUpperCase()) 
+                                            || set.user_email.toUpperCase().includes(this.searchInput.toUpperCase())
+                                      );//search for title username or email
   }
 
 }

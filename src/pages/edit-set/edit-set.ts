@@ -3,13 +3,6 @@ import { SetProvider } from './../../providers/set/set';
 import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the EditSetPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-edit-set',
@@ -30,10 +23,6 @@ export class EditSetPage implements OnInit{
     this.setService.getSet(this.set_id).then(set => {
       this.editSet = set;
     })
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad EditSetPage');
   }
 
   submit(){
