@@ -31,7 +31,7 @@
       <ion-input class="text-input" type="text" [(ngModel)]="newcard.back" name="description" placeholder="dog..."></ion-input>
     </ion-item><br>
     
-    <button ion-button type="submit" color="primary" block>Add Flashcard</button>
+    <button ion-button type="submit" color="secondary" block>Add Flashcard</button>
 
   </form>
   <!-- // Form -->
@@ -111,6 +111,31 @@
   </button>
   <!-- // delete Button -->
 
+  <ion-list-header class="margin_top_large">
+      Creator Information
+    </ion-list-header>
+    <ion-card *ngIf="set" >
+      <div class="padding">
+        <h6 *ngIf="set.creator_email" ><strong>E-Mail: </strong>{{set.creator_email}}</h6>
+        <p *ngIf="set.creator_username && set.creator_username != ''"><strong>Nickname: </strong>{{set.creator_username}}</p>
+      </div>
+    </ion-card><hr>
+  
+    <!-- Description -->
+  
+    <ion-list-header>
+      Set Information
+    </ion-list-header>
+    <ion-card *ngIf="set"  >
+      <div class="padding">
+        <h6 *ngIf="set.title" ><strong>Title: </strong>{{set.title}}</h6>
+        <p *ngIf="set.timestamp "><strong>Created On: </strong>{{set.timestamp.toDate()}}</p> 
+        <p *ngIf="cards "><strong>Number Of Flashcards: </strong>{{cards.length}}</p> 
+        <p *ngIf="set.description"><strong>Description:<br></strong>{{set.description}}</p>
+      </div>
+    </ion-card><hr>
+    <!-- // Description -->
+
 
 </ng-container>
 <!-- // OWN SET - if user owns the shown set -->
@@ -121,34 +146,55 @@
 <!-- FOREIGN SET - if user is not the owner of the shown set -->
 <ng-template #foreignSet>
 
+  <ion-list-header>
+    Creator Information
+  </ion-list-header>
+  <ion-card *ngIf="set" >
+    <div class="padding">
+      <h6 *ngIf="set.creator_email" ><strong>E-Mail: </strong>{{set.creator_email}}</h6>
+      <p *ngIf="set.creator_username && set.creator_username != ''"><strong>Nickname: </strong>{{set.creator_username}}</p>
+    </div>
+  </ion-card><hr>
+
   <!-- Description -->
-  <div padding>
-    <h2>Description:<br></h2>
-    <p>{{set.description}}</p>
-  </div>
+
+  <ion-list-header>
+    Set Information
+  </ion-list-header>
+  <ion-card *ngIf="set"  >
+    <div class="padding">
+      <h6 *ngIf="set.title" ><strong>Title: </strong>{{set.title}}</h6>
+      <p *ngIf="set.timestamp "><strong>Created On: </strong>{{set.timestamp.toDate()}}</p> 
+      <p *ngIf="cards "><strong>Number Of Flashcards: </strong>{{cards.length}}</p> 
+      <p *ngIf="set.description"><strong>Description:<br></strong>{{set.description}}</p>
+    </div>
+  </ion-card><hr>
   <!-- // Description -->
 
-
-  <!-- Button Bar -->
-      
-      <!-- Search and Reorder Toolbar -->
-      <ion-toolbar *ngIf="this.cards && this.cards.length >= 2"  style="color: white">
-          <ion-searchbar cancelButtonText='Cancel'
-          [(ngModel)]="searchInput"
-          (ionFocus)="onFocus($event)"
-          (ionInput)="onInput($event)"
-          (ionCancel)="onCancel($event)">
-          </ion-searchbar>
-          <ion-buttons end>
-            <button ion-button icon-only (click)='openSelect()'>
-              <ion-icon name="reorder"></ion-icon>
-            </button>
-          </ion-buttons>
-        </ion-toolbar>
-        <!-- // Search and Reorder Toolbar -->
-  <!-- // Button Bar -->
+  
      
   <!-- Flashcards -->
+  <ion-list-header>
+  </ion-list-header>
+    <!-- Button Bar -->
+        
+        <!-- Search and Reorder Toolbar -->
+        <ion-toolbar *ngIf="this.cards && this.cards.length >= 2"  style="color: white">
+            <ion-searchbar cancelButtonText='Cancel'
+            [(ngModel)]="searchInput"
+            (ionFocus)="onFocus($event)"
+            (ionInput)="onInput($event)"
+            (ionCancel)="onCancel($event)">
+            </ion-searchbar>
+            <ion-buttons end>
+              <button ion-button icon-only (click)='openSelect()'>
+                <ion-icon name="reorder"></ion-icon>
+              </button>
+            </ion-buttons>
+          </ion-toolbar>
+          <!-- // Search and Reorder Toolbar -->
+    <!-- // Button Bar -->
+
   <div id="cards">
     <div class="padding">
       <ng-container *ngIf="cards?.length > 0; else noCards">
@@ -171,7 +217,7 @@
         </ng-template>
       </ng-template>
     </div>
-  </div>
+  </div><hr>
   <!-- // Flashcards -->
 
   <!-- Turn Cards Button  -->
