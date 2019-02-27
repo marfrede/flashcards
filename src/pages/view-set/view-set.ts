@@ -158,6 +158,7 @@ export class ViewSetPage {
   }
   
   onInput($event){
+    console.log('input: >',this.searchInput,'<')
     if(this.searchInput == '') this.cards = this.cards_const; 
     if(this.searchInput) this.cards = this.cards_const.filter(card => card.front.toUpperCase().includes(this.searchInput.toUpperCase()));
   }
@@ -167,7 +168,7 @@ export class ViewSetPage {
   }
 
   turnCard(card: Card){
-    this.toggleShownText(this.cards.indexOf(card));
+    this.toggleShownText(this.cards_const.indexOf(card));
   }
 
   toggleShownText(index: number) {

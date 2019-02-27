@@ -65,8 +65,8 @@
         <ion-list *ngFor="let card of cards">
 
           <ion-item-sliding (click)="turnCard(card)">
-            <ion-item [ngClass]="cardsShowFront[cards.indexOf(card)]? 'flashcard-front': 'flashcard-back' " >
-               {{cardsShowFront[cards.indexOf(card)]? card.front : card.back}}
+            <ion-item [ngClass]="cardsShowFront[cards_const.indexOf(card)]? 'flashcard-front': 'flashcard-back' " >
+               {{cardsShowFront[cards_const.indexOf(card)]? card.front : card.back}}
             </ion-item>
             <ion-item-options side="right">
               <button class="padding" color="danger" ion-button (click)="deleteCard(card.id)">&emsp;&emsp;&emsp;<ion-icon name="trash"></ion-icon>&emsp;&emsp;&emsp;&emsp;</button>
@@ -199,10 +199,9 @@
       <ng-container *ngIf="cards?.length > 0; else noCards">
         <ion-list *ngFor="let card of cards">
 
-          <ion-item (click)="turnCard(card)" [ngClass]="cardsShowFront[cards.indexOf(card)]? 'flashcard-front': 'flashcard-back' " >
-              {{cardsShowFront[cards.indexOf(card)]? cardFrontText: cardBackText}}
-              {{cardsShowFront[cards.indexOf(card)]? card.front : card.back}}
-          </ion-item>
+            <ion-item [ngClass]="cardsShowFront[cards_const.indexOf(card)]? 'flashcard-front': 'flashcard-back' " >
+                {{cardsShowFront[cards_const.indexOf(card)]? card.front : card.back}}
+            </ion-item>
 
         </ion-list>
       </ng-container>
