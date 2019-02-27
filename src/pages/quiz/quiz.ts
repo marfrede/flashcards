@@ -165,53 +165,62 @@ export class QuizPage implements OnInit {
     });
   }
 
-  swipeAll(event: any): any {
-    console.log('Swipe All', event);
+  swipeAll(event: any): any { //necessary for ionic-swipe-all Plugin
   }
 
-  nextCard(){
-    if(!this.cardShowsFront) this.turnCard();
+  nextCard():Promise<string>{
 
-    //pick random card with probability distribution with regard to card.difficulty
-    this.getCard().then(res => {
-      this.rand_card = res;
-    }).catch(err => {
+    return new Promise<string>(resolve => {
+      if(!this.cardShowsFront) this.turnCard();
+  
+      //pick random card with probability distribution with regard to card.difficulty
       this.getCard().then(res => {
         this.rand_card = res;
+        resolve('lucky');
       }).catch(err => {
         this.getCard().then(res => {
           this.rand_card = res;
-        }).catch(res => {
-          this.rand_card = res;
+          resolve('lucky');
+        }).catch(err => {
+          this.getCard().then(res => {
+            this.rand_card = res;
+            resolve('lucky');
+          }).catch(res => {
+            this.rand_card = res;
+            resolve('lucky');
+          })
         })
-      })
-    });
-  
-    if(this.rand_card) this.getInformationOn(this.rand_card.back);
+      });
+      
+    })
 
   }
 
   swipeLeft(event: any, toUpdate:Card): void {
-    console.log('easy');
     this.updEasy(toUpdate);
-    this.nextCard();
+    this.nextCard().then(()=>{
+      if(this.rand_card) this.getInformationOn(this.rand_card.back);
+    });
   }
 
   swipeRight(event: any, toUpdate:Card): void {
-      console.log('hard');
       this.updHard(toUpdate);
-      this.nextCard();
+      this.nextCard().then(()=>{
+        if(this.rand_card) this.getInformationOn(this.rand_card.back);
+      });;
   }
 
   swipeUp(event: any, toUpdate:Card): void {
-      console.log('nuffin');
-      this.nextCard();
+      this.nextCard().then(()=>{
+        if(this.rand_card) this.getInformationOn(this.rand_card.back);
+      });;
   }
 
   swipeDown(event: any, toUpdate:Card): void {
-      console.log('medium');
       this.updMedium(toUpdate);
-      this.nextCard();
+      this.nextCard().then(()=>{
+        if(this.rand_card) this.getInformationOn(this.rand_card.back);
+      });;
   }
 
   updEasy(toUpdate:Card){
