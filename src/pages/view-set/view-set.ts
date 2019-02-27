@@ -46,14 +46,8 @@ export class ViewSetPage {
                           // are sorted (front-asc / front-desc / back-asc /...) 
 
 //JUST SOME HTML TEXT
-  cardFrontText:string; //title for front of card (e.g. "front: ")
-  cardBackText:string;  //title for back of card (e.g. "back: ")
   cardFrontButText:string;  //toggle button text option1
   cardBackButText:string;   //toggle button text option2
-
-  quizButtonText:string;  //QuizButton text
-
-  noCardsText:string;   //text shown if there are no Cards in the current Set
 
 //CONSTRUCTOR
   constructor(public navCtrl: NavController, 
@@ -104,11 +98,7 @@ export class ViewSetPage {
     this.searchInput = '';             //empty for now
 
     //HTML TEXT
-      this.cardFrontText = '';
-      this.cardBackText = '';
 
-      this.noCardsText = 'No Cards Yet Inserted To '//set.name;
-      this.quizButtonText = 'Quiz-it!';
       this.cardFrontButText = 'FRONT';
       this.cardBackButText = 'BACK';
       
@@ -168,8 +158,8 @@ export class ViewSetPage {
   }
   
   onInput($event){
-    if(this.searchInput)
-    this.cards = this.cards_const.filter(card => card.front.toUpperCase().includes(this.searchInput.toUpperCase()));
+    if(this.searchInput == '') this.cards = this.cards_const; 
+    if(this.searchInput) this.cards = this.cards_const.filter(card => card.front.toUpperCase().includes(this.searchInput.toUpperCase()));
   }
 
   onCancel($event){

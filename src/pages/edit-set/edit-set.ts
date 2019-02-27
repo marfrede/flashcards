@@ -42,7 +42,6 @@ export class EditSetPage implements OnInit{
             this.navCtrl.pop();
           })
         }
-
     }
   }
 

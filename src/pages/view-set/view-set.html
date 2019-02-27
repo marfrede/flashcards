@@ -38,11 +38,11 @@
 
    <!-- Button Bar -->
       <!-- Quizmode Button -->
-      <button *ngIf="this.cards && this.cards.length > 0"  (click)='openQuizPage()' ion-button full>{{quizButtonText}}</button>
+      <button *ngIf="this.cards_const && this.cards_const.length > 0"  (click)='openQuizPage()' ion-button full>Quiz-it!</button>
       <!-- // Quizmode Button -->
       
       <!-- Search and Reorder Toolbar -->
-      <ion-toolbar *ngIf="this.cards && this.cards.length >= 2"  style="color: white">
+      <ion-toolbar *ngIf="this.cards_const && this.cards_const.length >= 2"  style="color: white">
         <ion-searchbar cancelButtonText='Cancel'
         [(ngModel)]="searchInput"
         (ionFocus)="onFocus($event)"
@@ -66,7 +66,6 @@
 
           <ion-item-sliding (click)="turnCard(card)">
             <ion-item [ngClass]="cardsShowFront[cards.indexOf(card)]? 'flashcard-front': 'flashcard-back' " >
-               {{cardsShowFront[cards.indexOf(card)]? cardFrontText: cardBackText}}
                {{cardsShowFront[cards.indexOf(card)]? card.front : card.back}}
             </ion-item>
             <ion-item-options side="right">
@@ -82,7 +81,7 @@
             <h5>No Cards Found</h5>
         </ng-container>
         <ng-template #rllyNo>
-          <h5>{{noCardsText}}{{set.title}}</h5>
+            <h5>No Cards In Here</h5>
         </ng-template>
       </ng-template>
     </div>
@@ -179,7 +178,7 @@
     <!-- Button Bar -->
         
         <!-- Search and Reorder Toolbar -->
-        <ion-toolbar *ngIf="this.cards && this.cards.length >= 2"  style="color: white">
+        <ion-toolbar *ngIf="this.cards_const && this.cards_const.length >= 2"  style="color: white">
             <ion-searchbar cancelButtonText='Cancel'
             [(ngModel)]="searchInput"
             (ionFocus)="onFocus($event)"
@@ -213,7 +212,7 @@
             <h5>No Cards Found</h5>
         </ng-container>
         <ng-template #rllyNo>
-          <h5>{{noCardsText}}{{set.title}}</h5>
+            <h5>No Cards In Here</h5>
         </ng-template>
       </ng-template>
     </div>
