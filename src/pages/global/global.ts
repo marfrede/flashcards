@@ -94,10 +94,7 @@ export class GlobalPage implements OnInit{
           });
         })
         this.messagesService.showMessageTop('Set Copied!');
-
       });
-
-
     });
   }
 
