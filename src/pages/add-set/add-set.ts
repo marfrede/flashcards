@@ -63,9 +63,9 @@ export class AddSetPage implements OnInit {
       this.set.creator_email = this.userInfo.email;
       this.set.creator_username = this.userInfo.name; //if adding a new set creator always == user
 
-      if(this.set.title == '' || this.set.title.length > 21){
+      if(this.set.title == '' || this.set.title.length > 28){
         if(this.set.title == '') this.messageService.showErrString('No Title','Your Set Needs A Title!');
-        else this.messageService.showErrString('Title To Long','The Maximum Number of Characters Is 21.')
+        else this.messageService.showErrString('Title To Long','The Maximum Number of Characters Is 28.')
       }else{
         if(this.set.description == '' || this.set.description.length < 10 || this.set.description.length > 120){
           if(this.set.description.length > 120) this.messageService.showErrString('Description To Long', 'The Maximum Number of Characters Is 120.')
@@ -81,6 +81,10 @@ export class AddSetPage implements OnInit {
         }
       }
     }
+  }
+
+  cancel(){
+    this.navCtrl.pop();
   }
 
 }
