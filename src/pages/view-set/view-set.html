@@ -35,8 +35,9 @@
 
   </form>
   <!-- // Form -->
-
-   <!-- Button Bar -->
+   
+  <!-- Flashcards -->
+    <!-- Button Bar -->
       <!-- Quizmode Button -->
       <button *ngIf="this.cards_const && this.cards_const.length > 0"  (click)='openQuizPage()' ion-button full>Quiz-it!</button>
       <!-- // Quizmode Button -->
@@ -57,35 +58,33 @@
       </ion-toolbar>
       <!-- // Search and Reorder Toolbar -->
     <!-- // Button Bar -->
-   
-  <!-- Flashcards -->
-  <div id="cards">
-    <div class="padding">
-      <ng-container *ngIf="cards?.length > 0; else noCards">
-        <ion-list *ngFor="let card of cards">
+    <div id="cards">
+      <div class="padding">
+        <ng-container *ngIf="cards?.length > 0; else noCards">
+          <ion-list *ngFor="let card of cards">
 
-          <ion-item-sliding (click)="turnCard(card)">
-            <ion-item [ngClass]="cardsShowFront[cards_const.indexOf(card)]? 'flashcard-front': 'flashcard-back' " >
-               {{cardsShowFront[cards_const.indexOf(card)]? card.front : card.back}}
-            </ion-item>
-            <ion-item-options side="right">
-              <button class="padding" color="danger" ion-button (click)="deleteCard(card.id)">&emsp;&emsp;&emsp;<ion-icon name="trash"></ion-icon>&emsp;&emsp;&emsp;&emsp;</button>
-            </ion-item-options>
-          </ion-item-sliding>
+            <ion-item-sliding (click)="turnCard(card)">
+              <ion-item [ngClass]="cardsShowFront[cards_const.indexOf(card)]? 'flashcard-front': 'flashcard-back' " >
+                {{cardsShowFront[cards_const.indexOf(card)]? card.front : card.back}}
+              </ion-item>
+              <ion-item-options side="right">
+                <button class="padding" color="danger" ion-button (click)="deleteCard(card.id)">&emsp;&emsp;&emsp;<ion-icon name="trash"></ion-icon>&emsp;&emsp;&emsp;&emsp;</button>
+              </ion-item-options>
+            </ion-item-sliding>
 
-        </ion-list>
-      </ng-container>
-      <ng-template #noCards>
-        <hr>
-        <ng-container *ngIf="this.cards_const && this.cards_const.length > 0; else rllyNo">
-            <h5>No Cards Found</h5>
+          </ion-list>
         </ng-container>
-        <ng-template #rllyNo>
-            <h5>No Cards In Here</h5>
+        <ng-template #noCards>
+          <hr>
+          <ng-container *ngIf="this.cards_const && this.cards_const.length > 0; else rllyNo">
+              <h5>No Cards Found</h5>
+          </ng-container>
+          <ng-template #rllyNo>
+              <h5>No Cards In Here</h5>
+          </ng-template>
         </ng-template>
-      </ng-template>
+      </div>
     </div>
-  </div>
   <!-- // Flashcards -->
 
   <!-- Turn Cards Button  -->
@@ -169,53 +168,48 @@
     </div>
   </ion-card><hr>
   <!-- // Description -->
-
-  
-     
+   
   <!-- Flashcards -->
-  <ion-list-header>
-  </ion-list-header>
     <!-- Button Bar -->
-        
-        <!-- Search and Reorder Toolbar -->
-        <ion-toolbar *ngIf="this.cards_const && this.cards_const.length >= 2"  style="color: white">
-            <ion-searchbar cancelButtonText='Cancel'
-            [(ngModel)]="searchInput"
-            (ionFocus)="onFocus($event)"
-            (ionInput)="onInput($event)"
-            (ionCancel)="onCancel($event)">
-            </ion-searchbar>
-            <ion-buttons end>
-              <button ion-button icon-only (click)='openSelect()'>
-                <ion-icon name="reorder"></ion-icon>
-              </button>
-            </ion-buttons>
-          </ion-toolbar>
-          <!-- // Search and Reorder Toolbar -->
+      
+      <!-- Search and Reorder Toolbar -->
+      <ion-toolbar *ngIf="this.cards_const && this.cards_const.length >= 2"  style="color: white">
+        <ion-searchbar cancelButtonText='Cancel'
+        [(ngModel)]="searchInput"
+        (ionFocus)="onFocus($event)"
+        (ionInput)="onInput($event)"
+        (ionCancel)="onCancel($event)">
+        </ion-searchbar>
+        <ion-buttons end>
+          <button ion-button icon-only (click)='openSelect()'>
+            <ion-icon name="reorder"></ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-toolbar>
+      <!-- // Search and Reorder Toolbar -->
     <!-- // Button Bar -->
+    <div id="cards">
+      <div class="padding">
+        <ng-container *ngIf="cards?.length > 0; else noCards">
+          <ion-list *ngFor="let card of cards">
 
-  <div id="cards">
-    <div class="padding">
-      <ng-container *ngIf="cards?.length > 0; else noCards">
-        <ion-list *ngFor="let card of cards">
-
-            <ion-item [ngClass]="cardsShowFront[cards_const.indexOf(card)]? 'flashcard-front': 'flashcard-back' " >
+              <ion-item (click)="turnCard(card)" [ngClass]="cardsShowFront[cards_const.indexOf(card)]? 'flashcard-front': 'flashcard-back' " >
                 {{cardsShowFront[cards_const.indexOf(card)]? card.front : card.back}}
-            </ion-item>
+              </ion-item>
 
-        </ion-list>
-      </ng-container>
-      <ng-template #noCards>
-        <hr>
-        <ng-container *ngIf="this.cards_const && this.cards_const.length > 0; else rllyNo">
-            <h5>No Cards Found</h5>
+          </ion-list>
         </ng-container>
-        <ng-template #rllyNo>
-            <h5>No Cards In Here</h5>
+        <ng-template #noCards>
+          <hr>
+          <ng-container *ngIf="this.cards_const && this.cards_const.length > 0; else rllyNo">
+              <h5>No Cards Found</h5>
+          </ng-container>
+          <ng-template #rllyNo>
+              <h5>No Cards In Here</h5>
+          </ng-template>
         </ng-template>
-      </ng-template>
+      </div>
     </div>
-  </div><hr>
   <!-- // Flashcards -->
 
   <!-- Turn Cards Button  -->
