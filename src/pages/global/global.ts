@@ -159,11 +159,12 @@ export class GlobalPage implements OnInit{
   }
   
   onInput($event){
-    if(this.searchInput)
-    this.sets = this.sets_const.filter(set => set.title.toUpperCase().includes(this.searchInput.toUpperCase()) 
-                                            || set.user_username.toUpperCase().includes(this.searchInput.toUpperCase()) 
-                                            || set.user_email.toUpperCase().includes(this.searchInput.toUpperCase())
-                                      );//search for title username or email
-  }
+    if(this.searchInput == '') this.sets = this.sets_const;
+    if(this.searchInput) this.sets = this.sets_const.filter(set => set.title.toUpperCase().includes(this.searchInput.toUpperCase()) 
+                                                          || set.user_username.toUpperCase().includes(this.searchInput.toUpperCase()) 
+                                                          || set.user_email.toUpperCase().includes(this.searchInput.toUpperCase())
+                                                      );//search for title username or email
 
+  }
 }
+
