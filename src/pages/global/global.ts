@@ -69,7 +69,6 @@ export class GlobalPage implements OnInit{
       slidingSet.close(); //html element slides back after click
      
       if(this.currentUser_email == toCopySet.user_email){
-        console.log('own Set');
         this.messagesService.showMessageTop('This Set Is Already Yours!');
         return; //no sense for downloading own set
       }
@@ -87,7 +86,7 @@ export class GlobalPage implements OnInit{
 
       this.setService.addSet(newSet).then(newSetId => { //addSet():Promise<string (id of added set) > 
         
-        this.setService.getCards$(toCopySetID).subscribe(cards => { //after adding newSet it gets a copied collection of the toCopySets cards
+        this.setService.getCards(toCopySetID).then(cards => { //after adding newSet it gets a copied collection of the toCopySets cards
       
           cards.forEach((card)=>{
             this.setService.addCard(newSetId, card); //no better method in firestore to copy a whole collection so far

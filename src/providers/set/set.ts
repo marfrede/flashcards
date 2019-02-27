@@ -60,6 +60,14 @@ export class SetProvider {
     }));
   }
 
+  getCards(set_id:string):Promise<Card[]>{
+    return new Promise<Card[]>(resolve => {
+      this.getCards$(set_id).subscribe(cards => {
+        resolve(cards);
+      })
+    })
+  }
+
   addSet(set:Set):Promise<string>{
     return new Promise<string>((resolve)=>{
       this.setsCollection.add({...set, timestamp: firebase.firestore.Timestamp.fromDate(new Date())}).then(doc => {
