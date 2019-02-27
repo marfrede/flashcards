@@ -16,7 +16,7 @@
 
   <form *ngIf="editSet"  (ngSubmit)="submit()">
 
-    <ion-label><strong>Titel: </strong></ion-label>
+    <ion-label><strong>Title: </strong></ion-label>
     <ion-item>
       <ion-input class="text-input" type="text" [(ngModel)]="editSet.title" name="title" color="secondary" placeholder="give your editSet a title..."></ion-input>
     </ion-item><br>
@@ -32,9 +32,9 @@
     </ion-item><br>
 
     <button ion-button type="submit" color="secondary" block>Update Set</button>
-    <button ion-button color="darkYellow" block>Cancel</button>
     
     
   </form>
+  <button ion-button color="darkYellow" block (click)="cancel()">Cancel</button>
 
 </ion-content>
