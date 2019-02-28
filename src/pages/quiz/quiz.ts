@@ -89,15 +89,16 @@ export class QuizPage implements OnInit {
     return new Promise<Card>((resolve, reject) => { 
       this.pick_().then(randi => {
 
-        randcard = randi; //get 'completely random' card
+        randcard = randi; // get 'completely 
+                          // random' card
       
         switch (randcard.diff) {
 
 
-          case Diff.easy: //you have to pick an easy card three times before it´s actually taken - very rare
-            this.counter.easy++;
-            if(this.counter.easy == 3){
-              this.counter.easy = 0;
+          case Diff.easy:                // you have to pick an   
+            this.counter.easy++;         // easy card three times
+            if(this.counter.easy == 3){  // before it´s actually
+              this.counter.easy = 0;     // taken - very rare case
               resolve(randcard);
             }else{
               reject(randcard);
@@ -105,10 +106,10 @@ export class QuizPage implements OnInit {
             break;
 
 
-          case Diff.medium: //you have to pick an medium card two times before it´s actually taken - rare
-            this.counter.medium++;
-            if(this.counter.medium == 2){
-              this.counter.medium = 0;
+          case Diff.medium:               // you have to pick an
+            this.counter.medium++;        // medium card two times
+            if(this.counter.medium == 2){ // before it´s actually 
+              this.counter.medium = 0;    // taken - rare case
               resolve(randcard);
             }else{
               reject(randcard);
@@ -116,9 +117,9 @@ export class QuizPage implements OnInit {
             break;
 
 
-          case Diff.hard: //hard cards are taken right away - most likely
-            resolve(randcard);
-            break;
+          case Diff.hard:                 // hard cards are taken
+            resolve(randcard);            // right away
+            break;                        // - most likely case
           default:
             console.log('error');
             break;
