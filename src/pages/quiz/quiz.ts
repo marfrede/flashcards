@@ -142,7 +142,7 @@ export class QuizPage implements OnInit {
     for(let i = 1; i<3; i++){
         this.phrases[i] = '';
       }
-    this.wordnikService.getPhrases$(searchText).subscribe(res => {
+    this.wordnikService.getPhrases(searchText).then(res => {
       for(let i = 0; i<3; i++){
         if(res && res[i] && res[i].gram1 && res[i].gram2){
           this.phrases[i] = res[i].gram1+ " " + res[i].gram2;

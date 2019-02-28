@@ -33,5 +33,13 @@ export class WordnikProvider {
     })
   }
 
+  getPhrases(searchTerm:string):Promise<any>{
+    return new Promise<any>(resolve => {
+      this.getPhrases$(searchTerm).subscribe(res => {
+        resolve(res);
+      })
+    })
+  }
+
 
 }
