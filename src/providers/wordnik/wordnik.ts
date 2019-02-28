@@ -25,5 +25,21 @@ export class WordnikProvider {
     return this.http.get(`${this.url_dot_jason}/${searchTerm}/${this.phrases}${this.url3}&api_key=${this.apiKey}`);
   }
 
+  getDetails(searchTerm:string):Promise<any>{
+    return new Promise<any>(resolve => {
+      this.getDetails$(searchTerm).subscribe(res => {
+        resolve(res);
+      })
+    })
+  }
+
+  getPhrases(searchTerm:string):Promise<any>{
+    return new Promise<any>(resolve => {
+      this.getPhrases$(searchTerm).subscribe(res => {
+        resolve(res);
+      })
+    })
+  }
+
 
 }
