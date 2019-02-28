@@ -131,7 +131,7 @@ export class QuizPage implements OnInit {
 
     //DETAILS
     this.details = '';
-    this.wordnikService.getDetails$(searchText).subscribe(res => {
+    this.wordnikService.getDetails(searchText).then(res => {
       if(res && res[0] && res[0].text){
         this.details = res[0].text;
       }
